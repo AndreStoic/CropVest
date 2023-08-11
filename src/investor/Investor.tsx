@@ -19,6 +19,7 @@ function Investor() {
     <>
         <div className="max-w-2xl mx-auto px-6 text-neutral-600 dark:text-neutral-400 leading-7 text-justify">
         {/* Title */}
+        <div className="text-center mb-4">
           <h1 className="font-bold text-4xl inline text-transparent bg-clip-text bg-black">
             Investor
           </h1>
