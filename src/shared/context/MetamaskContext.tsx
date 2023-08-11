@@ -12,9 +12,6 @@ const MetamaskContextProvider = ({ children }: any) => {
   const [polygon, setPolygon] = useState<any>(null);
   const [walletAddress, setWalletAddress] = useState<string>("");
 
-
-
-
   async function connectWallet() {
 
     const options = {
@@ -50,7 +47,7 @@ const MetamaskContextProvider = ({ children }: any) => {
           })
         } catch (error) {
           // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
-          console.log(`wallet_addEthereumChain Error: ${error.message}`)
+          console.log(`wallet_addEthereumChain Error: ${(error as any).message}`)
         }
         // handle other "switch" errors
       }
@@ -61,7 +58,7 @@ const MetamaskContextProvider = ({ children }: any) => {
     window.ethereum
     .request({ method: 'eth_requestAccounts' })
     .then((walletAddress: any) => {console.log(walletAddress)
-    setWalletAddress((walletAddress as any))})
+    setWalletAddress((walletAddress[0] as string))})
     .catch((error: any) => {
       if (error.code === 4001) {
         // EIP-1193 userRejectedRequest error

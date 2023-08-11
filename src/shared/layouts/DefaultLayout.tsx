@@ -35,8 +35,6 @@ export const DefaultLayout = ({ children }: any) => {
 
   return (
     <>
-      {/* Fixed Feedback Button */}
-
       <div className="flex">
         {/* Menu */}
         <aside
@@ -56,8 +54,7 @@ export const DefaultLayout = ({ children }: any) => {
           </NavigationContext.Provider>
         </aside>
         <main className="flex flex-col min-h-screen flex-1 lg:ml-[17rem]">
-          {/* Info Box */}
-
+          
           <div className="flex-1">
             {/* Top Bar [Burger Menu | Socials | Keplr] */}
             <div className="flex items-center gap-4 p-4">
@@ -70,10 +67,10 @@ export const DefaultLayout = ({ children }: any) => {
                   <FontAwesomeIcon icon={faBars} size="xl" />
                 </button>
               </div>
-              <div className="flex-1 sm:flex-initial sm:flex sm:justify-end">
+
+              <div className="flex-1 sm:flex-initial sm:flex sm:justify-end ml-auto">
                 <MetamaskPanel />
               </div>
-
             </div>
 
             <div className="lg:mr-[17rem]">{children}</div>

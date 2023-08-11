@@ -6,11 +6,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState, useContext } from "react";
+import { MetamaskContext } from "shared/context/MetamaskContext";
 
 function Farmer() {
+  const {
+    polygon,
+    walletAddress,
+    disconnectWallet,
+    connectWallet
+  } = useContext(MetamaskContext);
 
   return (
     <>
+    <div className="max-w-2xl mx-auto px-6 text-neutral-600 dark:text-neutral-400 leading-7 text-justify">
+        {/* Title */}
+        <div className="text-center mb-4">
+          <h1 className="font-bold text-4xl inline text-transparent bg-clip-text bg-black">
+            Farmer
+          </h1>
+        </div>
+        </div>
+        
     </>
   )
 }
