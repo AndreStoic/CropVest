@@ -13,30 +13,62 @@ const MetamaskContextProvider = ({ children }: any) => {
   const [walletAddress, setWalletAddress] = useState<string>("");
 
 
+
+
   async function connectWallet() {
 
     const options = {
       injectProvider: true,
-      communicationLayerPreference: 'webrtc',
+      dappMetadata:{name: "CropVest", url: "https://test"},
     };
     
     const MMSDK = new MetaMaskSDK(options);
 
-    const polygon = MMSDK.getProvider();
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x44d' }],
+        })
+      } catch (error) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: '0x44d', 
+                blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
+                chainName: 'Polygon zkEVM', 
+                nativeCurrency: {
+                  decimals: 18,
+                  name: 'Ethereum',
+                  symbol: 'ETH'
+                },
+                rpcUrls: ['https://zkevm-rpc.com']
+              },
+            ],
+          })
+        } catch (error) {
+          // user rejects the request to "add chain" or param values are wrong, maybe you didn't use hex above for `chainId`?
+          console.log(`wallet_addEthereumChain Error: ${error.message}`)
+        }
+        // handle other "switch" errors
+      }
+    }
 
-    setPolygon(polygon)
+    setPolygon(window.ethereum)
 
-    const walletAddress = polygon
+    window.ethereum
     .request({ method: 'eth_requestAccounts' })
-    .catch((error) => {
+    .then((walletAddress: any) => {console.log(walletAddress)
+    setWalletAddress((walletAddress as any))})
+    .catch((error: any) => {
       if (error.code === 4001) {
         // EIP-1193 userRejectedRequest error
         console.log('Please connect to MetaMask.');
       } else {
         console.error(error);
       }
-    console.log(walletAddress)
-    setWalletAddress((walletAddress as any))
     });
   
   }

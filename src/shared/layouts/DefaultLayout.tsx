@@ -1,6 +1,7 @@
 import { faBars, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "shared/components/Footer";
+import { MetamaskPanel } from "shared/components/Metamask";
 import { useState, createContext, useEffect, useContext } from "react";
 import { Breakpoint } from "react-socks";
 import { Flip, ToastContainer } from "react-toastify";
@@ -68,6 +69,9 @@ export const DefaultLayout = ({ children }: any) => {
                 >
                   <FontAwesomeIcon icon={faBars} size="xl" />
                 </button>
+              </div>
+              <div className="flex-1 sm:flex-initial sm:flex sm:justify-end">
+                <MetamaskPanel />
               </div>
 
             </div>
