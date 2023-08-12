@@ -15,7 +15,7 @@ import { ethers } from 'ethers';
 import abiCropVault from 'shared/ContractABIs/CropVault.json';
 import abiNFT from 'shared/ContractABIs/ERC1155m.json';
 import BigNumber from "bignumber.js";
-import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection } from "shared/utils/commons";
+import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection, NFTDecimals } from "shared/utils/commons";
 
 function Investor() {
   const {
@@ -123,7 +123,7 @@ async function fetchVaultNFTs(contractAddress: string) {
  try {
      const balanceOfBatch = await contractInstance.balanceOfBatch([contractAddress, contractAddress, contractAddress, contractAddress],[0,1,2,3]);
      console.log(balanceOfBatch)
-     return balanceOfBatch
+     return balanceOfBatch[0]
  } catch (error) {
      console.error('Error calling contract method:', error);
  }
@@ -148,8 +148,16 @@ async function fetchVaultNFTs(contractAddress: string) {
     const NFT2 = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Corn"};
     const NFT3 = {name: "Wheat 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Wheat"};
     const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
-    
-    NFTs
+    const vaultsNFTsModified = vaultsNFTs.map((item, i) => {
+      console.log(pairs[i], vaultsNFTs[i]);
+      console.log(pairs[i], vaultsNFTs[0]);
+      console.log(pairs[i], vaultsNFTs[1]);
+      console.log(pairs[i], vaultsNFTs[2]);
+      return {[pairs[i]]: vaultsNFTs[i]};
+  });
+  
+  console.log(vaultsNFTsModified);
+  
   
 
   const vaultsData = VaultAddresses.map((vault, i) => ({

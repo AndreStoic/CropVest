@@ -1,0 +1,1033 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "quoteAsset_",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "cropId",
+          "type": "uint256"
+        }
+      ],
+      "name": "lastUpdated",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "cropId",
+          "type": "uint256"
+        }
+      ],
+      "name": "price",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "quoteAsset",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "cropId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "updatePrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x60a060405234801561001057600080fd5b5060405161043a38038061043a83398101604081905261002f91610099565b61003833610049565b6001600160a01b03166080526100c9565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000602082840312156100ab57600080fd5b81516001600160a01b03811681146100c257600080fd5b9392505050565b6080516103566100e4600039600061012f01526103566000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c806382367b2d1161005b57806382367b2d146100df5780638da5cb5b146100f2578063f2fde38b14610117578063fdf262b71461012a57600080fd5b806324a295221461008257806326a49e37146100b5578063715018a6146100d5575b600080fd5b6100a26100903660046102b5565b60016020526000908152604090205481565b6040519081526020015b60405180910390f35b6100a26100c33660046102b5565b60026020526000908152604090205481565b6100dd610151565b005b6100dd6100ed3660046102ce565b610165565b6000546001600160a01b03165b6040516001600160a01b0390911681526020016100ac565b6100dd6101253660046102f0565b61018d565b6100ff7f000000000000000000000000000000000000000000000000000000000000000081565b61015961020b565b6101636000610265565b565b61016d61020b565b600091825260026020908152604080842092909255600190529020429055565b61019561020b565b6001600160a01b0381166101ff5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b61020881610265565b50565b6000546001600160a01b031633146101635760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657260448201526064016101f6565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000602082840312156102c757600080fd5b5035919050565b600080604083850312156102e157600080fd5b50508035926020909101359150565b60006020828403121561030257600080fd5b81356001600160a01b038116811461031957600080fd5b939250505056fea2646970667358221220f5381a72e4db2fe1b5ae164e1963557f5dd3ebec1815f56f940eaaf4e0f0e97c64736f6c63430008130033",
+    "sourceMap": "184:463:2:-:0;;;405:73;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;936:32:0;719:10:1;936:18:0;:32::i;:::-;-1:-1:-1;;;;;447:24:2;;;184:463;;2433:187:0;2506:16;2525:6;;-1:-1:-1;;;;;2541:17:0;;;-1:-1:-1;;;;;;2541:17:0;;;;;;2573:40;;2525:6;;;;;;;2573:40;;2506:16;2573:40;2496:124;2433:187;:::o;14:290:4:-;84:6;137:2;125:9;116:7;112:23;108:32;105:52;;;153:1;150;143:12;105:52;179:16;;-1:-1:-1;;;;;224:31:4;;214:42;;204:70;;270:1;267;260:12;204:70;293:5;14:290;-1:-1:-1;;;14:290:4:o;:::-;184:463:2;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c806382367b2d1161005b57806382367b2d146100df5780638da5cb5b146100f2578063f2fde38b14610117578063fdf262b71461012a57600080fd5b806324a295221461008257806326a49e37146100b5578063715018a6146100d5575b600080fd5b6100a26100903660046102b5565b60016020526000908152604090205481565b6040519081526020015b60405180910390f35b6100a26100c33660046102b5565b60026020526000908152604090205481565b6100dd610151565b005b6100dd6100ed3660046102ce565b610165565b6000546001600160a01b03165b6040516001600160a01b0390911681526020016100ac565b6100dd6101253660046102f0565b61018d565b6100ff7f000000000000000000000000000000000000000000000000000000000000000081565b61015961020b565b6101636000610265565b565b61016d61020b565b600091825260026020908152604080842092909255600190529020429055565b61019561020b565b6001600160a01b0381166101ff5760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084015b60405180910390fd5b61020881610265565b50565b6000546001600160a01b031633146101635760405162461bcd60e51b815260206004820181905260248201527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657260448201526064016101f6565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000602082840312156102c757600080fd5b5035919050565b600080604083850312156102e157600080fd5b50508035926020909101359150565b60006020828403121561030257600080fd5b81356001600160a01b038116811461031957600080fd5b939250505056fea2646970667358221220f5381a72e4db2fe1b5ae164e1963557f5dd3ebec1815f56f940eaaf4e0f0e97c64736f6c63430008130033",
+    "sourceMap": "184:463:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;275:63;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;345:25:4;;;333:2;318:18;275:63:2;;;;;;;;345:53;;;;;;:::i;:::-;;;;;;;;;;;;;;1831:101:0;;;:::i;:::-;;484:161:2;;;;;;:::i;:::-;;:::i;1201:85:0:-;1247:7;1273:6;-1:-1:-1;;;;;1273:6:0;1201:85;;;-1:-1:-1;;;;;798:32:4;;;780:51;;768:2;753:18;1201:85:0;634:203:4;2081:198:0;;;;;;:::i;:::-;;:::i;234:35:2:-;;;;;1831:101:0;1094:13;:11;:13::i;:::-;1895:30:::1;1922:1;1895:18;:30::i;:::-;1831:101::o:0;484:161:2:-;1094:13:0;:11;:13::i;:::-;567::2::1;::::0;;;:5:::1;:13;::::0;;;;;;;:24;;;;601:11:::1;:19:::0;;;;623:15:::1;601:37:::0;;484:161::o;2081:198:0:-;1094:13;:11;:13::i;:::-;-1:-1:-1;;;;;2169:22:0;::::1;2161:73;;;::::0;-1:-1:-1;;;2161:73:0;;1335:2:4;2161:73:0::1;::::0;::::1;1317:21:4::0;1374:2;1354:18;;;1347:30;1413:34;1393:18;;;1386:62;-1:-1:-1;;;1464:18:4;;;1457:36;1510:19;;2161:73:0::1;;;;;;;;;2244:28;2263:8;2244:18;:28::i;:::-;2081:198:::0;:::o;1359:130::-;1247:7;1273:6;-1:-1:-1;;;;;1273:6:0;719:10:1;1422:23:0;1414:68;;;;-1:-1:-1;;;1414:68:0;;1742:2:4;1414:68:0;;;1724:21:4;;;1761:18;;;1754:30;1820:34;1800:18;;;1793:62;1872:18;;1414:68:0;1540:356:4;2433:187:0;2506:16;2525:6;;-1:-1:-1;;;;;2541:17:0;;;-1:-1:-1;;;;;;2541:17:0;;;;;;2573:40;;2525:6;;;;;;;2573:40;;2506:16;2573:40;2496:124;2433:187;:::o;14:180:4:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:4;;14:180;-1:-1:-1;14:180:4:o;381:248::-;449:6;457;510:2;498:9;489:7;485:23;481:32;478:52;;;526:1;523;516:12;478:52;-1:-1:-1;;549:23:4;;;619:2;604:18;;;591:32;;-1:-1:-1;381:248:4:o;842:286::-;901:6;954:2;942:9;933:7;929:23;925:32;922:52;;;970:1;967;960:12;922:52;996:23;;-1:-1:-1;;;;;1048:31:4;;1038:42;;1028:70;;1094:1;1091;1084:12;1028:70;1117:5;842:286;-1:-1:-1;;;842:286:4:o",
+    "linkReferences": {},
+    "immutableReferences": {
+      "146": [
+        {
+          "start": 303,
+          "length": 32
+        }
+      ]
+    }
+  },
+  "methodIdentifiers": {
+    "lastUpdated(uint256)": "24a29522",
+    "owner()": "8da5cb5b",
+    "price(uint256)": "26a49e37",
+    "quoteAsset()": "fdf262b7",
+    "renounceOwnership()": "715018a6",
+    "transferOwnership(address)": "f2fde38b",
+    "updatePrice(uint256,uint256)": "82367b2d"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"quoteAsset_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cropId\",\"type\":\"uint256\"}],\"name\":\"lastUpdated\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cropId\",\"type\":\"uint256\"}],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"quoteAsset\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"cropId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"newPrice\",\"type\":\"uint256\"}],\"name\":\"updatePrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/CropOracle.sol\":\"CropOracle\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@molecule/=lib/molecule-core/src/\",\":@openzeppelin/=lib/molecule-core/lib/openzeppelin-contracts/\",\":@solmate/=lib/solmate/src/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":molecule-core/=lib/molecule-core/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":solmate/=lib/solmate/src/\"]},\"sources\":{\"lib/molecule-core/lib/openzeppelin-contracts/contracts/access/Ownable.sol\":{\"keccak256\":\"0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://40fb1b5102468f783961d0af743f91b9980cf66b50d1d12009f6bb1869cea4d2\",\"dweb:/ipfs/QmYqEbJML4jB1GHbzD4cUZDtJg5wVwNm3vDJq1GbyDus8y\"]},\"lib/molecule-core/lib/openzeppelin-contracts/contracts/utils/Context.sol\":{\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92\",\"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3\"]},\"src/CropOracle.sol\":{\"keccak256\":\"0xc5f6db7ada5867b507c71cbee7604afb46a55a54f78ea481816ce29fbc4c751b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://83c514501d1acde6cabd0b0526b74c247a00968e43d2a6a501a99775600eef90\",\"dweb:/ipfs/QmaEswpfLKMge1aQq2XW9j1JCXnhMYYfWKcTr4c1cCGQWf\"]},\"src/interfaces/ICropOracle.sol\":{\"keccak256\":\"0x264f21ed98d3bea832328f36243f81abb00e185777357f32d005441b5d51e7b2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://22b16a468c448b300576858adf2227ae14196b3e3f70bcdec21b311023b9242d\",\"dweb:/ipfs/QmTJxR3mDewbsDmqBcy8v3UmW6m9Uck15BtexmyoqG4Ys5\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.19+commit.7dd6d404"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "quoteAsset_",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "OwnershipTransferred",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "cropId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "lastUpdated",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "cropId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "price",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "price",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "quoteAsset",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        },
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "renounceOwnership"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "transferOwnership"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "cropId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "newPrice",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "updatePrice"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "owner()": {
+            "details": "Returns the address of the current owner."
+          },
+          "renounceOwnership()": {
+            "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+          },
+          "transferOwnership(address)": {
+            "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@molecule/=lib/molecule-core/src/",
+        ":@openzeppelin/=lib/molecule-core/lib/openzeppelin-contracts/",
+        ":@solmate/=lib/solmate/src/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        ":forge-std/=lib/forge-std/src/",
+        ":molecule-core/=lib/molecule-core/src/",
+        ":openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        ":openzeppelin/=lib/openzeppelin-contracts/contracts/",
+        ":solmate/=lib/solmate/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/CropOracle.sol": "CropOracle"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/molecule-core/lib/openzeppelin-contracts/contracts/access/Ownable.sol": {
+        "keccak256": "0xa94b34880e3c1b0b931662cb1c09e5dfa6662f31cba80e07c5ee71cd135c9673",
+        "urls": [
+          "bzz-raw://40fb1b5102468f783961d0af743f91b9980cf66b50d1d12009f6bb1869cea4d2",
+          "dweb:/ipfs/QmYqEbJML4jB1GHbzD4cUZDtJg5wVwNm3vDJq1GbyDus8y"
+        ],
+        "license": "MIT"
+      },
+      "lib/molecule-core/lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+        "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+        "urls": [
+          "bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+          "dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+        ],
+        "license": "MIT"
+      },
+      "src/CropOracle.sol": {
+        "keccak256": "0xc5f6db7ada5867b507c71cbee7604afb46a55a54f78ea481816ce29fbc4c751b",
+        "urls": [
+          "bzz-raw://83c514501d1acde6cabd0b0526b74c247a00968e43d2a6a501a99775600eef90",
+          "dweb:/ipfs/QmaEswpfLKMge1aQq2XW9j1JCXnhMYYfWKcTr4c1cCGQWf"
+        ],
+        "license": "MIT"
+      },
+      "src/interfaces/ICropOracle.sol": {
+        "keccak256": "0x264f21ed98d3bea832328f36243f81abb00e185777357f32d005441b5d51e7b2",
+        "urls": [
+          "bzz-raw://22b16a468c448b300576858adf2227ae14196b3e3f70bcdec21b311023b9242d",
+          "dweb:/ipfs/QmTJxR3mDewbsDmqBcy8v3UmW6m9Uck15BtexmyoqG4Ys5"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/CropOracle.sol",
+    "id": 189,
+    "exportedSymbols": {
+      "CropOracle": [
+        188
+      ],
+      "ICropOracle": [
+        217
+      ],
+      "Ownable": [
+        112
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:615:2",
+    "nodes": [
+      {
+        "id": 136,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:2",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "0.8",
+          ".19"
+        ]
+      },
+      {
+        "id": 138,
+        "nodeType": "ImportDirective",
+        "src": "57:67:2",
+        "nodes": [],
+        "absolutePath": "lib/molecule-core/lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        "file": "@openzeppelin/contracts/access/Ownable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 189,
+        "sourceUnit": 113,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 137,
+              "name": "Ownable",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 112,
+              "src": "65:7:2",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 140,
+        "nodeType": "ImportDirective",
+        "src": "125:57:2",
+        "nodes": [],
+        "absolutePath": "src/interfaces/ICropOracle.sol",
+        "file": "./interfaces/ICropOracle.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 189,
+        "sourceUnit": 218,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 139,
+              "name": "ICropOracle",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 217,
+              "src": "133:11:2",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 188,
+        "nodeType": "ContractDefinition",
+        "src": "184:463:2",
+        "nodes": [
+          {
+            "id": 146,
+            "nodeType": "VariableDeclaration",
+            "src": "234:35:2",
+            "nodes": [],
+            "baseFunctions": [
+              195
+            ],
+            "constant": false,
+            "functionSelector": "fdf262b7",
+            "mutability": "immutable",
+            "name": "quoteAsset",
+            "nameLocation": "259:10:2",
+            "scope": 188,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 145,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "234:7:2",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 150,
+            "nodeType": "VariableDeclaration",
+            "src": "275:63:2",
+            "nodes": [],
+            "baseFunctions": [
+              216
+            ],
+            "constant": false,
+            "functionSelector": "24a29522",
+            "mutability": "mutable",
+            "name": "lastUpdated",
+            "nameLocation": "327:11:2",
+            "scope": 188,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+              "typeString": "mapping(uint256 => uint256)"
+            },
+            "typeName": {
+              "id": 149,
+              "keyName": "cropId",
+              "keyNameLocation": "291:6:2",
+              "keyType": {
+                "id": 147,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "283:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "275:44:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                "typeString": "mapping(uint256 => uint256)"
+              },
+              "valueName": "timestamp",
+              "valueNameLocation": "309:9:2",
+              "valueType": {
+                "id": 148,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "301:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 154,
+            "nodeType": "VariableDeclaration",
+            "src": "345:53:2",
+            "nodes": [],
+            "baseFunctions": [
+              202
+            ],
+            "constant": false,
+            "functionSelector": "26a49e37",
+            "mutability": "mutable",
+            "name": "price",
+            "nameLocation": "393:5:2",
+            "scope": 188,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+              "typeString": "mapping(uint256 => uint256)"
+            },
+            "typeName": {
+              "id": 153,
+              "keyName": "cropId",
+              "keyNameLocation": "361:6:2",
+              "keyType": {
+                "id": 151,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "353:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "345:40:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                "typeString": "mapping(uint256 => uint256)"
+              },
+              "valueName": "price",
+              "valueNameLocation": "379:5:2",
+              "valueType": {
+                "id": 152,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "371:7:2",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 164,
+            "nodeType": "FunctionDefinition",
+            "src": "405:73:2",
+            "nodes": [],
+            "body": {
+              "id": 163,
+              "nodeType": "Block",
+              "src": "437:41:2",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 161,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 159,
+                      "name": "quoteAsset",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 146,
+                      "src": "447:10:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 160,
+                      "name": "quoteAsset_",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 156,
+                      "src": "460:11:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "447:24:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 162,
+                  "nodeType": "ExpressionStatement",
+                  "src": "447:24:2"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 157,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 156,
+                  "mutability": "mutable",
+                  "name": "quoteAsset_",
+                  "nameLocation": "425:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 164,
+                  "src": "417:19:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 155,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "417:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "416:21:2"
+            },
+            "returnParameters": {
+              "id": 158,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "437:0:2"
+            },
+            "scope": 188,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "id": 187,
+            "nodeType": "FunctionDefinition",
+            "src": "484:161:2",
+            "nodes": [],
+            "body": {
+              "id": 186,
+              "nodeType": "Block",
+              "src": "557:88:2",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "id": 177,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 173,
+                        "name": "price",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 154,
+                        "src": "567:5:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                          "typeString": "mapping(uint256 => uint256)"
+                        }
+                      },
+                      "id": 175,
+                      "indexExpression": {
+                        "id": 174,
+                        "name": "cropId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 166,
+                        "src": "573:6:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "567:13:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 176,
+                      "name": "newPrice",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 168,
+                      "src": "583:8:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "567:24:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 178,
+                  "nodeType": "ExpressionStatement",
+                  "src": "567:24:2"
+                },
+                {
+                  "expression": {
+                    "id": 184,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 179,
+                        "name": "lastUpdated",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 150,
+                        "src": "601:11:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                          "typeString": "mapping(uint256 => uint256)"
+                        }
+                      },
+                      "id": 181,
+                      "indexExpression": {
+                        "id": 180,
+                        "name": "cropId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 166,
+                        "src": "613:6:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "601:19:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 182,
+                        "name": "block",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -4,
+                        "src": "623:5:2",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_block",
+                          "typeString": "block"
+                        }
+                      },
+                      "id": 183,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "629:9:2",
+                      "memberName": "timestamp",
+                      "nodeType": "MemberAccess",
+                      "src": "623:15:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "601:37:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 185,
+                  "nodeType": "ExpressionStatement",
+                  "src": "601:37:2"
+                }
+              ]
+            },
+            "baseFunctions": [
+              209
+            ],
+            "functionSelector": "82367b2d",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 171,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 170,
+                  "name": "onlyOwner",
+                  "nameLocations": [
+                    "548:9:2"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 31,
+                  "src": "548:9:2"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "548:9:2"
+              }
+            ],
+            "name": "updatePrice",
+            "nameLocation": "493:11:2",
+            "parameters": {
+              "id": 169,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 166,
+                  "mutability": "mutable",
+                  "name": "cropId",
+                  "nameLocation": "513:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 187,
+                  "src": "505:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 165,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "505:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 168,
+                  "mutability": "mutable",
+                  "name": "newPrice",
+                  "nameLocation": "529:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 187,
+                  "src": "521:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 167,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "521:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "504:34:2"
+            },
+            "returnParameters": {
+              "id": 172,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "557:0:2"
+            },
+            "scope": 188,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 141,
+              "name": "ICropOracle",
+              "nameLocations": [
+                "207:11:2"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 217,
+              "src": "207:11:2"
+            },
+            "id": 142,
+            "nodeType": "InheritanceSpecifier",
+            "src": "207:11:2"
+          },
+          {
+            "baseName": {
+              "id": 143,
+              "name": "Ownable",
+              "nameLocations": [
+                "220:7:2"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 112,
+              "src": "220:7:2"
+            },
+            "id": 144,
+            "nodeType": "InheritanceSpecifier",
+            "src": "220:7:2"
+          }
+        ],
+        "canonicalName": "CropOracle",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          188,
+          112,
+          134,
+          217
+        ],
+        "name": "CropOracle",
+        "nameLocation": "193:10:2",
+        "scope": 189,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 2
+}
