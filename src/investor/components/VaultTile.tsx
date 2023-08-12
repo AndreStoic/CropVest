@@ -6,6 +6,8 @@ import { formatNumber } from "shared/utils/commons";
 import { ethers } from 'ethers';
 import abi from 'shared/ContractABIs/CropVault.json';
 import BigNumber from "bignumber.js";
+import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropCollection } from "shared/utils/commons";
+import { toast } from "react-toastify";
 
 interface IVaultItemProps {
   name: string;
@@ -22,6 +24,7 @@ interface IVaultItemProps {
   contractAddress: string;
 }
 
+
 const VaultTile = (props: IVaultItemProps) => {
 
   const {
@@ -31,17 +34,36 @@ const VaultTile = (props: IVaultItemProps) => {
     connectWallet
   } = useContext(MetamaskContext);
 
+  const [amount, setAmount] = useState(false);
+
   async function invest() {
     const provider = new ethers.providers.Web3Provider(window.ethereum as any);
     const signer = provider.getSigner();
+    const tokenInstance = new ethers.Contract(ContractAddressERC20, abi.abi, signer);
+
+    const bigNumberAmount = ethers.utils.parseUnits(amount.toString(), ERC20TokenDecimals);
+
+    // Check the current allowance
+    const currentAllowance = await tokenInstance.allowance(signer.getAddress(), props.contractAddress);
+
+    // If the current allowance is less than the desired amount, then approve the tokens
+    if (currentAllowance.lt(bigNumberAmount)) {
+      const approveAmount = ethers.utils.parseUnits(amount.toString(), ERC20TokenDecimals); // Assume `tokenDecimals` is the number of decimals the token has
+      const approveTx = await tokenInstance.approve(props.contractAddress, approveAmount);
+      const approveReceipt = await approveTx.wait();
+      toast.success(`Approval confirmed in block: ${approveReceipt.blockNumber}`);
+    } else {
+        console.log('Token approval is already sufficient.');
+    }
+
     const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
-      try {
-          const totalAssets: BigNumber = await contractInstance.totalAssets();
-          return totalAssets.toNumber()
-      } catch (error) {
-          console.error('Error calling contract method:', error);
-      }
- }
+    const txResponse = await contractInstance.deposit(bigNumberAmount, walletAddress);
+    console.log(`Transaction hash: ${txResponse.hash}`);
+    toast.success(`Transaction hash: ${txResponse.hash}`);
+
+    const receipt = await txResponse.wait();
+    toast.success(`Transaction confirmed in block: ${receipt.blockNumber}`);
+}
 
 function withdrawInvestment() {
   // Check if MetaMask is installed
@@ -65,6 +87,7 @@ function withdrawInvestment() {
     asset = {props.asset}
     invest= {invest}
     withdrawInvestment= {withdrawInvestment}
+    setAmount = {setAmount}
   />
     <a
       onClick={handleClick}
@@ -97,9 +120,6 @@ function withdrawInvestment() {
 
         {/* minimumValue */}
         <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(props.minimumValue)} ${props.tokenDenom}`}</div>
-
-        {/* Token Price */}
-        <div className="text-neutral-400 flex-1">{`Token Price: ${props.tokenPrice} ${props.tokenDenom}`}</div>
 
         {/* Tags */}
         {props.tags?.length! > 0 && (

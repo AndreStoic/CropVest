@@ -12,8 +12,10 @@ import React from "react";
 import VaultTile from "./components/VaultTile"
 import Header from "./components/Header";
 import { ethers } from 'ethers';
-import abi from 'shared/ContractABIs/CropVault.json';
+import abiCropVault from 'shared/ContractABIs/CropVault.json';
+import abiNFT from 'shared/ContractABIs/ERC1155m.json';
 import BigNumber from "bignumber.js";
+import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection } from "shared/utils/commons";
 
 function Investor() {
   const {
@@ -32,9 +34,11 @@ function Investor() {
   const [vaultsUserBalances, setVaultsUserBalances] = useState<any>("");
   const [vaultsAssets, setVaultsAssets] = useState<any>("");
   const [vaultsNames, setVaultsNames] = useState<any>("");
+  const [vaultsNFTs, setVaultsNFTs] = useState<any>("");
 
   const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
   
+  const pairs = {0: "cocoa", 1: "soybeans", 2: "wheat", 3: "coffee"}
 
   interface IVaultItemProps {
     name: string;
@@ -57,7 +61,7 @@ const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 const signer = provider.getSigner();
 
 async function fetchVaultAsset(contractAddress: string) {
- const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+ const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
  try {
      const totalAssets: BigNumber = await contractInstance.totalAssets();
      return totalAssets.toNumber()
@@ -74,7 +78,7 @@ async function fetchVaultsAssets(VaultAddresses: any) {
 }
 
 async function fetchVaultUserBalance(contractAddress: string) {
-  const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+  const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
   try {
       const balanceOf: BigNumber = await contractInstance.balanceOf(walletAddress);
       return balanceOf.toNumber()
@@ -97,7 +101,7 @@ async function fetchVaultUserBalance(contractAddress: string) {
  }
 
  async function fetchVaultName(contractAddress: string) {
-  const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+  const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
   try {
       const name: BigNumber = await contractInstance.name();
       return name
@@ -106,45 +110,46 @@ async function fetchVaultUserBalance(contractAddress: string) {
   }
  }
 
+  
+ async function fetchVaultsNFTs(VaultAddresses: any) {
+  const vaults = await Promise.all(VaultAddresses.map(async (address: any) => {
+    return await fetchVaultNFTs(address);
+  }));
+  return vaults
+}
 
+async function fetchVaultNFTs(contractAddress: string) {
+ const contractInstance = new ethers.Contract(ContractAddressCropCollection, abiNFT.abi, signer);
+ try {
+     const balanceOfBatch = await contractInstance.balanceOfBatch([contractAddress, contractAddress, contractAddress, contractAddress],[0,1,2,3]);
+     console.log(balanceOfBatch)
+     return balanceOfBatch
+ } catch (error) {
+     console.error('Error calling contract method:', error);
+ }
+}
 
  useEffect(() => {
-
   if (polygon && walletAddress) {
-
   fetchVaultsAssets(VaultAddresses).then(result => setVaultsAssets(result))
   fetchVaultsUserBalances(VaultAddresses).then(result => setVaultsUserBalances(result))
   fetchVaultsNames(VaultAddresses).then(result => setVaultsNames(result))
+  fetchVaultsNFTs(VaultAddresses).then(result => setVaultsNFTs(result))
   }
 
 }, [polygon, walletAddress]);
 
+
   useEffect(() => {
 
-    if (vaultsNames && vaultsAssets && vaultsUserBalances) {
+    if (vaultsNames && vaultsAssets && vaultsUserBalances && vaultsNFTs) {
+    
     const NFT = {name: "Potato 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
     const NFT2 = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Corn"};
     const NFT3 = {name: "Wheat 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Wheat"};
     const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
     
-    const aggregateNFTs = (nfts: any) => {
-      const grouped = nfts.reduce((acc: any, nft: any) => {
-          (acc[nft.type] = acc[nft.type] || []).push(nft);
-          return acc;
-      }, {});
-  
-      return Object.values(grouped).map((nftGroup: any) => {
-          return {
-              type: nftGroup[0].type,
-              totalCount: nftGroup.length,  // Total count of NFTs of this type
-              name: nftGroup.every((nft: any) => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
-              description: "",
-              riskFactor: nftGroup.reduce((sum: any, nft: any) => sum + nft.riskFactor, 0) / nftGroup.length,
-              location: nftGroup.every((nft: any) => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
-              minimumValue: nftGroup.reduce((sum: any, nft:any) => sum + nft.minimumValue, 0)
-          };
-      });
-  }
+    NFTs
   
 
   const vaultsData = VaultAddresses.map((vault, i) => ({
@@ -154,11 +159,10 @@ async function fetchVaultUserBalance(contractAddress: string) {
     APR: 0.1,
     tokenPrice: "0.01",
     tokenDenom: "USDC",
-    investment: vaultsUserBalances[i],
-    NFTs: aggregateNFTs(NFTs)
+    investment: ethers.utils.formatUnits(vaultsUserBalances[i], ERC20TokenDecimals),
+    NFTs: NFTs,
+    contractAddress: VaultAddresses[i]
   }));
-
-  console.log(vaultsData)
   
   const calculateVaultMinimumValue = (vault: any) => {
       return vault.NFTs.reduce((sum: any, nft: any) => {
@@ -174,7 +178,7 @@ async function fetchVaultUserBalance(contractAddress: string) {
   setVaultData(vaultsWithMinimumValue);
 }
 
-  }, [vaultsNames, vaultsAssets, vaultsUserBalances]);
+  }, [vaultsNames, vaultsAssets, vaultsUserBalances, vaultsNFTs]);
 
   return (
     <>

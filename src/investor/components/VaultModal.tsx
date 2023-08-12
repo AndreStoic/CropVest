@@ -9,6 +9,7 @@ import React from "react";
 import queryString from "query-string";
 import Header from "./Header";
 import { formatNumber } from "shared/utils/commons";
+import { ERC20TokenDecimals, ContractAddressERC20 } from "shared/utils/commons";
 
 interface IVaultProps {
   open: boolean;
@@ -16,6 +17,7 @@ interface IVaultProps {
   asset: any; 
   invest: any;
   withdrawInvestment: any;
+  setAmount: any;
 }
 
 class VaultModal extends React.Component<IVaultProps> {
@@ -52,7 +54,7 @@ class VaultModal extends React.Component<IVaultProps> {
           title="Vault"
           description="Invest into the vault by depositing USDC."
         />
-        <div className="flex center  justify-center">
+        <div className="flex center justify-center">
         <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left mr-4">
         {/* Image */}
         {this.props?.image && (
@@ -132,7 +134,7 @@ class VaultModal extends React.Component<IVaultProps> {
     <div className="flex items-center justify-between"> 
         <div className="flex items-center space-x-4"> {/* Nested flex for input and tokenDenom */}
             <input
-                value={this.props.amount}
+                onChange={e => this.props.setAmount(e.target.value)}
                 type="number"
                 min="0"
                 step="0.001"
