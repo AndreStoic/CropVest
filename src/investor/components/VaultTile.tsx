@@ -8,6 +8,7 @@ import abi from 'shared/ContractABIs/CropVault.json';
 import BigNumber from "bignumber.js";
 import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropCollection } from "shared/utils/commons";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IVaultItemProps {
   name: string;
@@ -57,7 +58,7 @@ const VaultTile = (props: IVaultItemProps) => {
     }
 
     const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
-    const txResponse = await contractInstance.withdrawal(bigNumberAmount, walletAddress, walletAddress);
+    const txResponse = await contractInstance.deposit(bigNumberAmount, walletAddress);
     console.log(`Transaction hash: ${txResponse.hash}`);
     toast.success(`Transaction hash: ${txResponse.hash}`);
 
@@ -74,7 +75,7 @@ async function withdrawInvestment() {
   const bigNumberAmount = ethers.utils.parseUnits(amount.toString(), ERC20TokenDecimals);
 
   const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
-  const txResponse = await contractInstance.deposit(bigNumberAmount, walletAddress);
+  const txResponse = await contractInstance.withdraw(bigNumberAmount, walletAddress, walletAddress);
   console.log(`Transaction hash: ${txResponse.hash}`);
   toast.success(`Transaction hash: ${txResponse.hash}`);
 

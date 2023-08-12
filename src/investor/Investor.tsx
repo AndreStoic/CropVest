@@ -16,7 +16,8 @@ import abiCropVault from 'shared/ContractABIs/CropVault.json';
 import abiNFT from 'shared/ContractABIs/ERC1155m.json';
 import abiOracle from 'shared/ContractABIs/CropOracle.json';
 import BigNumber from "bignumber.js";
-import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection, NFTDecimals, ContractAddressOracle } from "shared/utils/commons";
+import "react-toastify/dist/ReactToastify.css";
+import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection, NFTDecimals, ContractAddressOracle, pairs } from "shared/utils/commons";
 
 function Investor() {
   const {
@@ -40,8 +41,6 @@ function Investor() {
 
   const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
   
-  const pairs = {0: "cocoa", 1: "soybeans", 2: "wheat", 3: "coffee"}
-
   interface IVaultItemProps {
     name: string;
     description: string;
@@ -66,7 +65,7 @@ async function fetchVaultAsset(contractAddress: string) {
  const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
  try {
      const totalAssets: BigNumber = await contractInstance.totalAssets();
-     return totalAssets.toNumber()
+     return BigNumber(totalAssets).dividedBy(ERC20TokenDecimals).toNumber()
  } catch (error) {
      console.error('Error calling contract method:', error);
  }
@@ -137,8 +136,9 @@ async function fetchOraclePrices(CropIds: any) {
   return vaults
 }
 
-async function fetchOraclePrice(CropId: string) {
+async function fetchOraclePrice(CropId: number) {
  const contractInstance = new ethers.Contract(ContractAddressOracle, abiOracle.abi, signer);
+ console.log(CropId)
  try {
      const cropPrice = await contractInstance.price(CropId);
      return cropPrice
@@ -173,15 +173,16 @@ async function fetchOraclePrice(CropId: string) {
 
   const vaultsData = VaultAddresses.map((vault, i) => ({
     name: vaultsNames[i],
-    url: "https://test",
     TVL: vaultsAssets[i],
-    APR: 0.1,
-    tokenPrice: "0.01",
+    APR: 0.05,
     tokenDenom: "USDC",
     investment: ethers.utils.formatUnits(vaultsUserBalances[i], ERC20TokenDecimals),
     NFTs: vaultsNFTsModified[i],
-    contractAddress: VaultAddresses[i]
+    contractAddress: VaultAddresses[i],
+    prices: cropPrices,
   }));
+
+  setVaultData(vaultsData)
   
 }
 
@@ -193,7 +194,7 @@ async function fetchOraclePrice(CropId: string) {
         {/* Title */}
         <Header
           title="Investor"
-          description="Invest into vaults that contains an asset representing a crop field"
+          description="Invest into vaults that contains multiple crops as collateral"
         />
 {/*         <div className="relative w-full sm:w-96 mx-auto mb-4">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

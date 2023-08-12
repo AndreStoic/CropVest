@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import queryString from "query-string";
 import Header from "./Header";
+import "react-toastify/dist/ReactToastify.css";
 import { formatNumber } from "shared/utils/commons";
 import { ERC20TokenDecimals, ContractAddressERC20 } from "shared/utils/commons";
 
@@ -24,6 +25,8 @@ class VaultModal extends React.Component<IVaultProps> {
 
   render() {
     if (!this.props?.open) return null;
+
+    console.log(this.props.asset?.NFTs);
 
     return (
       <>
@@ -95,7 +98,7 @@ class VaultModal extends React.Component<IVaultProps> {
       <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
 
         <div className="text-xl font-semibold flex-initial mb-1">
-          Included Crop Field in this Vault:
+          Included Crop Fields in this Vault:
         </div>
         {this.props.asset?.NFTs.length > 0 && (
             <div className="overflow-y-auto" style={{ maxHeight: '300px' }}>
@@ -110,10 +113,7 @@ class VaultModal extends React.Component<IVaultProps> {
         <div className="text-neutral-400 flex-1">{NFT.description}</div>
 
         {/* Minimum Value */}
-        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(NFT.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
-
-        {/* Location */}
-        <div className="text-neutral-400 flex-1">{`Location: ${NFT.location}`}</div>
+        <div className="text-neutral-400 flex-1">{`Value: ${formatNumber(NFT.Value)} ${this.props.asset.tokenDenom}`}</div>
 
         {/* Risk factor */}
         <div className="text-neutral-400 flex-1">{`Risk factor: ${NFT.riskFactor}`}</div>
