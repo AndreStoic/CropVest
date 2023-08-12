@@ -47,11 +47,11 @@ function Investor() {
 
   return (
     <>
-        <div className="max-w-2xl mx-auto px-6 text-neutral-600 dark:text-neutral-400 leading-7 text-justify">
+        <div className="max-w-4xl mx-auto px-3 text-neutral-600 dark:text-neutral-400 leading-7 text-justify center justify-center">
         {/* Title */}
         <Header
           title="Investor"
-          description="Invest into vaults that contain multpile NFTs representing crop fields"
+          description="Invest into vaults that contains an asset representing a crop field"
         />
         <div className="relative w-full sm:w-96 mx-auto mb-4">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -66,7 +66,7 @@ function Investor() {
             placeholder="Search"
           />
         </div>
-        <div className="grid grid-cols-9 gap-3 auto-rows-auto">
+        <div className="grid grid-cols-8 gap-3 auto-rows-auto">
           {vaultData?.length > 0 && (
             <>
               {vaultData.map((Vault: any) => (console.log(Vault),

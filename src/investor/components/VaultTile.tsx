@@ -44,6 +44,18 @@ const VaultTile = (props: IVaultItemProps) => {
     connectWallet
   } = useContext(MetamaskContext);
 
+  function invest() {
+    // Check if MetaMask is installed
+    console.log("check")
+ }
+
+function withdrawInvestment() {
+  // Check if MetaMask is installed
+    console.log("check")
+}
+
+
+
   useEffect(() => {
 
     async function fetchData() {
@@ -78,7 +90,7 @@ const VaultTile = (props: IVaultItemProps) => {
     setIsVaultModalOpen(true)
   };
 
-  const vaultData = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
+  const vaultData = {name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC", location: "Colorado, USA", rickFactor: 0.30}
 
   return (
     <>
@@ -89,6 +101,8 @@ const VaultTile = (props: IVaultItemProps) => {
       document.body.classList.remove("overflow-hidden");
     }}
     asset = {vaultData}
+    invest= {invest}
+    withdrawInvestment= {withdrawInvestment}
   />
     <a
       onClick={handleClick}
@@ -123,7 +137,7 @@ const VaultTile = (props: IVaultItemProps) => {
         <div className="text-neutral-400 flex-1">{`Capacity: ${props.Capacity}`}</div>
 
         {/* Token Price */}
-        <div className="text-neutral-400 flex-1">{`Token Price: ${props.tokenPrice}`}</div>
+        <div className="text-neutral-400 flex-1">{`Token Price: ${props.tokenPrice} ${props.tokenDenom}`}</div>
 
         {/* Tags */}
         {props.tags?.length! > 0 && (

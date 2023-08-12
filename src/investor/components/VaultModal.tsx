@@ -13,6 +13,8 @@ interface IVaultProps {
   open: boolean;
   onClose: any;
   asset: any; 
+  invest: any;
+  withdrawInvestment: any;
 }
 
 class VaultModal extends React.Component<IVaultProps> {
@@ -28,7 +30,7 @@ class VaultModal extends React.Component<IVaultProps> {
         onClick={this.props.onClose}
       >
         {/* Inner */}
-        <div className="absolute top-[5%] w-[60vw] onEnter_fadeInDown flex center">
+        <div className="absolute top-[5%] w-screen h-screen onEnter_fadeInDown center">
           <div className="mx-auto max-w-4xl px-4">
               <div
                 className="bg-white dark:bg-neutral-900 p-8 rounded-2xl"
@@ -45,11 +47,11 @@ class VaultModal extends React.Component<IVaultProps> {
                     <FontAwesomeIcon icon={faXmark} className="fa-fw" />
                   </button>
                 </div>
-                <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
                 <Header
           title="Vault"
           description="Invest into the vault by depositing USDC."
         />
+                <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
         {/* Image */}
         {this.props.image && (
           <img
@@ -77,9 +79,23 @@ class VaultModal extends React.Component<IVaultProps> {
         <div className="text-neutral-400 flex-1">{`Capacity: ${this.props.asset.Capacity}`}</div>
 
         {/* Token Price */}
-        <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice}`}</div>
+        <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice} ${this.props.asset.tokenDenom}`}</div>
+
+        {/* Location */}
+        <div className="text-neutral-400 flex-1">{`Location: ${this.props.asset.location}`}</div>
+
+        {/* Risk_factor */}
+        <div className="text-neutral-400 flex-1">{`Risk factor: ${this.props.asset.riskFactor}`}</div>
 
       </div>
+      <button className="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-2 rounded-md text-white"
+                  onClick={() => this.props.invest()}>
+                  Invest 
+                </button>
+                <button className="bg-neutral-800 hover:bg-neutral-700 font-semibold px-4 py-2 rounded-md text-white"
+                  onClick={() => this.props.withdrawInvestment()}>
+                  Withdraw Investment
+                </button>
               </div>
             </div>
           </div>
