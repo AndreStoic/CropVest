@@ -2,12 +2,12 @@ import React from "react";
 import VaultModal from "./VaultModal";
 import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
-import { formatNumber } from "shared/utils/commons";
 import { ethers } from 'ethers';
 import abi from 'shared/ContractABIs/CropVault.json';
 import BigNumber from "bignumber.js";
 import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropCollection } from "shared/utils/commons";
 import { toast } from "react-toastify";
+import { NFTDecimals, formatNumber } from "shared/utils/commons";
 import "react-toastify/dist/ReactToastify.css";
 
 interface IVaultItemProps {
@@ -90,6 +90,16 @@ async function withdrawInvestment() {
     setIsVaultModalOpen(true)
   };
 
+        // Initialize totalValue
+        let totalValue = 0;
+
+        // Assuming this.props.asset?.NFTs is an object or array.
+        if (props.asset?.NFTs) {
+          Array.from(Object.values(props.asset?.NFTs)).forEach((NFT: any, i) => {
+            totalValue += NFT[Object.keys(NFT)[0]]/(10**NFTDecimals)*props.asset.prices[i];
+          });
+        }
+
   return (
     <>
     <VaultModal
@@ -131,6 +141,10 @@ async function withdrawInvestment() {
 
         {/* APR */}
         <div className="text-neutral-400 flex-1">{`APR: ${(props.APR*100).toFixed(2)} %`}</div>
+
+                {/* Value */}
+
+                <div className="text-neutral-400 flex-1">{`Underlying Value: ${formatNumber(totalValue)} ${props.asset.tokenDenom}`}</div>
 
         {/* Tags */}
         {props.tags?.length! > 0 && (
