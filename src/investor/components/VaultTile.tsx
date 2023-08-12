@@ -1,10 +1,11 @@
 import React from "react";
 import { ContractAddress } from "shared/utils/config";
-import PoolModal from "./PoolModal";
+import VaultModal from "./VaultModal";
 import { useEffect, useState, useContext } from "react";
 
-interface IPoolItemProps {
+interface IVaultItemProps {
   name: string;
+  description: string;
   image?: string;
   tags?: string[];
   url?: string;
@@ -16,26 +17,26 @@ interface IPoolItemProps {
   assets: any;
 }
 
-const PoolTile = (props: IPoolItemProps) => {
+const VaultTile = (props: IVaultItemProps) => {
 
-  const [isPoolModalOpen, setIsPoolModalOpen] = useState(false);
+  const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   const handleClick = () => {
-    setIsPoolModalOpen(true)
+    setIsVaultModalOpen(true)
 
   };
 
-  const data = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"},{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"},{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
+  const data = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
 
   return (
     <>
-    <PoolModal
-    open={isPoolModalOpen}
+    <VaultModal
+    open={isVaultModalOpen}
     onClose={() => {
-      setIsPoolModalOpen(false);
+      setIsVaultModalOpen(false);
       document.body.classList.remove("overflow-hidden");
     }}
-    assets = {data}
+    asset = {data}
   />
     <a
       onClick={handleClick}
@@ -83,4 +84,4 @@ const PoolTile = (props: IPoolItemProps) => {
   );
 };
 
-export default PoolTile;
+export default VaultTile;

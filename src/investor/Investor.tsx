@@ -9,7 +9,8 @@ import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import PoolTile from "./components/PoolTile"
+import VaultTile from "./components/VaultTile"
+import Header from "./components/Header";
 import { ContractAddress } from "shared/utils/config";
 
 function Investor() {
@@ -23,10 +24,10 @@ function Investor() {
     // Search
   const [searchText, setSearchText] = useState<string>("");
 
-  const [poolData, setPoolData] = useState<any>("");
-  const [filteredPoolData, setFilteredPoolData] = useState<any>("");
+  const [vaultData, setVaultData] = useState<any>("");
+  const [filteredVaultData, setFilteredVaultData] = useState<any>("");
 
-  interface IPoolItemProps {
+  interface IVaultItemProps {
     name: string;
     description: string;
     image?: string;
@@ -41,18 +42,17 @@ function Investor() {
   useEffect(() => {
     const data = {name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}
 
-    setPoolData([data,data, data, data, data, data])
+    setVaultData([data,data, data, data, data, data])
   }, []);
 
   return (
     <>
         <div className="max-w-2xl mx-auto px-6 text-neutral-600 dark:text-neutral-400 leading-7 text-justify">
         {/* Title */}
-        <div className="text-center mb-4">
-          <h1 className="font-bold text-4xl inline text-transparent bg-clip-text bg-black">
-            Investor
-          </h1>
-        </div>
+        <Header
+          title="Investor"
+          description="Invest into vaults that contain multpile NFTs representing crop fields"
+        />
         <div className="relative w-full sm:w-96 mx-auto mb-4">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="" />
@@ -67,27 +67,27 @@ function Investor() {
           />
         </div>
         <div className="grid grid-cols-9 gap-3 auto-rows-auto">
-          {poolData?.length > 0 && (
+          {vaultData?.length > 0 && (
             <>
-              {poolData.map((Pool: any) => (console.log(Pool),
-                <PoolTile
-                  key={Pool.name}
-                  name={Pool.name}
-                  description={Pool.description}
+              {vaultData.map((Vault: any) => (console.log(Vault),
+                <VaultTile
+                  key={Vault.name}
+                  name={Vault.name}
+                  description={Vault.description}
                   image={""}
-                  url={Pool.url}
-                  TVL={Pool.TVL}
-                  APR={Pool.APR}
-                  Capacity={Pool.Capacity}
-                  tokenPrice={Pool.tokenPrice}
-                  tokenDenom={Pool.tokenDenom}
-                  assets={Pool.assets}
+                  url={Vault.url}
+                  TVL={Vault.TVL}
+                  APR={Vault.APR}
+                  Capacity={Vault.Capacity}
+                  tokenPrice={Vault.tokenPrice}
+                  tokenDenom={Vault.tokenDenom}
+                  assets={Vault.assets}
                 />
               ))}
             </>
           )}
 
-          {poolData?.length <= 0 && (
+          {vaultData?.length <= 0 && (
             <>
               {/* Skeleton Loader Item */}
               <div className="animate-pulse col-span-12 sm:col-span-6 lg:col-span-6 xl:col-span-4 2xl:col-span-3">
