@@ -1,9 +1,10 @@
 import React from "react";
 import { ContractAddress } from "shared/utils/config";
+import PoolModal from "./PoolModal";
+import { useEffect, useState, useContext } from "react";
 
-interface INftItemProps {
+interface IPoolItemProps {
   name: string;
-  description: string;
   image?: string;
   tags?: string[];
   url?: string;
@@ -12,19 +13,35 @@ interface INftItemProps {
   Capacity: number;
   tokenPrice: number;
   tokenDenom: string;
+  assets: any;
 }
 
-const NftTile = (props: INftItemProps) => {
+const PoolTile = (props: IPoolItemProps) => {
+
+  const [isPoolModalOpen, setIsPoolModalOpen] = useState(false);
+
   const handleClick = () => {
+    setIsPoolModalOpen(true)
+
   };
 
+  const data = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"},{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"},{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
+
   return (
+    <>
+    <PoolModal
+    open={isPoolModalOpen}
+    onClose={() => {
+      setIsPoolModalOpen(false);
+      document.body.classList.remove("overflow-hidden");
+    }}
+    assets = {data}
+  />
     <a
-      href={props.url || "#"}
-      target={props.url ? "_blank" : "_self"}
       onClick={handleClick}
       className="group col-span-12 sm:col-span-6 lg:col-span-6 xl:col-span-4 2xl:col-span-3 hover:bg-gradient-to-r from-cyan-500 to-purple-500 p-0.5 rounded-xl hover:shadow-2xl hover:shadow-cyan-500/40"
     >
+
       <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
         {/* Image */}
         {props.image && (
@@ -62,7 +79,8 @@ const NftTile = (props: INftItemProps) => {
         )}
       </div>
     </a>
+    </>
   );
 };
 
-export default NftTile;
+export default PoolTile;

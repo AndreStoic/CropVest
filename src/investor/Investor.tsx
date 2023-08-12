@@ -9,7 +9,7 @@ import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import NftTile from "./components/NftTile"
+import PoolTile from "./components/PoolTile"
 import { ContractAddress } from "shared/utils/config";
 
 function Investor() {
@@ -23,10 +23,10 @@ function Investor() {
     // Search
   const [searchText, setSearchText] = useState<string>("");
 
-  const [nftData, setNftData] = useState<any>("");
-  const [filteredNftData, setFilteredNftData] = useState<any>("");
+  const [poolData, setPoolData] = useState<any>("");
+  const [filteredPoolData, setFilteredPoolData] = useState<any>("");
 
-  interface INftItemProps {
+  interface IPoolItemProps {
     name: string;
     description: string;
     image?: string;
@@ -41,7 +41,7 @@ function Investor() {
   useEffect(() => {
     const data = {name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}
 
-    setNftData([data])
+    setPoolData([data,data, data, data, data, data])
   }, []);
 
   return (
@@ -66,27 +66,28 @@ function Investor() {
             placeholder="Search"
           />
         </div>
-        <div className="grid grid-cols-12 gap-4 auto-rows-auto">
-          {nftData?.length > 0 && (
+        <div className="grid grid-cols-9 gap-3 auto-rows-auto">
+          {poolData?.length > 0 && (
             <>
-              {nftData.map((NFT: any) => (console.log(NFT),
-                <NftTile
-                  key={NFT.name}
-                  name={NFT.name}
-                  description={NFT.description}
+              {poolData.map((Pool: any) => (console.log(Pool),
+                <PoolTile
+                  key={Pool.name}
+                  name={Pool.name}
+                  description={Pool.description}
                   image={""}
-                  url={NFT.url}
-                  TVL={NFT.TVL}
-                  APR={NFT.APR}
-                  Capacity={NFT.Capacity}
-                  tokenPrice={NFT.tokenPrice}
-                  tokenDenom={NFT.tokenDenom}
+                  url={Pool.url}
+                  TVL={Pool.TVL}
+                  APR={Pool.APR}
+                  Capacity={Pool.Capacity}
+                  tokenPrice={Pool.tokenPrice}
+                  tokenDenom={Pool.tokenDenom}
+                  assets={Pool.assets}
                 />
               ))}
             </>
           )}
 
-          {nftData?.length <= 0 && (
+          {poolData?.length <= 0 && (
             <>
               {/* Skeleton Loader Item */}
               <div className="animate-pulse col-span-12 sm:col-span-6 lg:col-span-6 xl:col-span-4 2xl:col-span-3">
