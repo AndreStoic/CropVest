@@ -1,0 +1,3 @@
+@openzeppelin/=lib/molecule-core/lib/openzeppelin-contracts/
+@molecule/=lib/molecule-core/src/
+@solmate/=lib/solmate/src/
