@@ -132,9 +132,6 @@ async function withdrawInvestment() {
         {/* APR */}
         <div className="text-neutral-400 flex-1">{`APR: ${(props.APR*100).toFixed(2)} %`}</div>
 
-        {/* minimumValue */}
-        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(props.minimumValue)} ${props.tokenDenom}`}</div>
-
         {/* Tags */}
         {props.tags?.length! > 0 && (
           <div className="space-x-2 mt-4 flex-initial">

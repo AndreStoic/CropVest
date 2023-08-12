@@ -64,8 +64,8 @@ const signer = provider.getSigner();
 async function fetchVaultAsset(contractAddress: string) {
  const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
  try {
-     const totalAssets: BigNumber = await contractInstance.totalAssets();
-     return BigNumber(totalAssets).dividedBy(ERC20TokenDecimals).toNumber()
+     const totalAssets = await contractInstance.totalAssets();
+     return totalAssets/(10**ERC20TokenDecimals)
  } catch (error) {
      console.error('Error calling contract method:', error);
  }
@@ -81,8 +81,8 @@ async function fetchVaultsAssets(VaultAddresses: any) {
 async function fetchVaultUserBalance(contractAddress: string) {
   const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
   try {
-      const balanceOf: BigNumber = await contractInstance.balanceOf(walletAddress);
-      return balanceOf.toNumber()
+      const balanceOf = await contractInstance.balanceOf(walletAddress);
+      return balanceOf/(10**ERC20TokenDecimals)
   } catch (error) {
       console.error('Error calling contract method:', error);
   }
@@ -104,7 +104,7 @@ async function fetchVaultUserBalance(contractAddress: string) {
  async function fetchVaultName(contractAddress: string) {
   const contractInstance = new ethers.Contract(contractAddress, abiCropVault.abi, signer);
   try {
-      const name: BigNumber = await contractInstance.name();
+      const name = await contractInstance.name();
       return name
   } catch (error) {
       console.error('Error calling contract method:', error);
@@ -141,7 +141,7 @@ async function fetchOraclePrice(CropId: number) {
  console.log(CropId)
  try {
      const cropPrice = await contractInstance.price(CropId);
-     return cropPrice
+     return cropPrice/(10**NFTDecimals)
  } catch (error) {
      console.error('Error calling contract method:', error);
  }
@@ -171,12 +171,13 @@ async function fetchOraclePrice(CropId: number) {
       };
     });
 
+  console.log(vaultsAssets[0])
   const vaultsData = VaultAddresses.map((vault, i) => ({
     name: vaultsNames[i],
     TVL: vaultsAssets[i],
     APR: 0.05,
     tokenDenom: "USDC",
-    investment: ethers.utils.formatUnits(vaultsUserBalances[i], ERC20TokenDecimals),
+    investment: vaultsUserBalances[i],
     NFTs: vaultsNFTsModified[i],
     contractAddress: VaultAddresses[i],
     prices: cropPrices,

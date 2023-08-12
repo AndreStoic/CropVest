@@ -19,11 +19,11 @@ class Footer extends React.Component {
           <div className="col-span-12 text-sm text-neutral-600 dark:text-neutral-400 font-medium">
             {"⚡️ Powered by "}
             <a
-              href="https://polygon.technology/polygon-zkevm"
+              href="https://polygon.technology"
               target="_blank"
               className="transition-colors hover:text-black dark:hover:text-white font-bold"
             >
-              Polygon zvEVM
+              Polygon
             </a>
           </div>
         </div>
