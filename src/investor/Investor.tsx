@@ -39,7 +39,7 @@ function Investor() {
   const [vaultsNFTs, setVaultsNFTs] = useState<any>("");
   const [cropPrices, setCropPrices] = useState<any>("");
 
-  const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
+  const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
   
   interface IVaultItemProps {
     name: string;
@@ -171,7 +171,6 @@ async function fetchOraclePrice(CropId: number) {
       };
     });
 
-  console.log(vaultsAssets[0])
   const vaultsData = VaultAddresses.map((vault, i) => ({
     name: vaultsNames[i],
     TVL: vaultsAssets[i],

@@ -16,6 +16,7 @@ import iconShadow from "leaflet/dist/images/marker-shadow.png";
   };
 
   const muiTheme = createTheme({
+
     palette: {
         primary: {
             main: '#007aff',
@@ -24,7 +25,10 @@ import iconShadow from "leaflet/dist/images/marker-shadow.png";
             default: '#F1F5F9',  // set default background color
             // paper: '#xxxxxx',  // you can also
         }
-      }
+      },
+      typography: {
+        fontFamily: 'Montserrat, sans-serif',
+    }
     }
   )
 
