@@ -8,7 +8,8 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 //import {SimpleMapScreenshoter} from "leaflet-simple-map-screenshoter";
-
+import Model from './Satellite';
+import AppContext from "./components/hooks/createContext";
 
   const options = {
     cMapUrl: 'cmaps/',
@@ -242,9 +243,15 @@ function HorizontalLabelPositionBelowStepper() {
     
       echo(chatCtl);
     }
+
+
+    const [clicks, setClicks] = useState("");
+    const [image, setImage] = useState("");
+    const [maskImg, setMaskImg] = useState("");
   
     return (
       <CropStatusContext.Provider value={{tradeStatus, setTradeStatus}}>
+      <AppContext.Provider value={{clicks:[clicks, setClicks], image:[image, setImage], maskImg:[maskImg, setMaskImg]}}>
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
         <Box sx={{ height: '82vh', backgroundColor: 'gray' }}>
@@ -269,6 +276,7 @@ function HorizontalLabelPositionBelowStepper() {
           </Box>
         </Box>
       </ThemeProvider>
+      </AppContext.Provider>
       </CropStatusContext.Provider>
     );
   }
@@ -353,6 +361,7 @@ return (
         <Grid xs={1} align="center">
           <Button type="button" onClick={setResponse} variant="contained" color="primary" disabled={disabled}>Approve</Button>
         </Grid>
+        <Model></Model>
       </Grid>
     </div>
   </div>
