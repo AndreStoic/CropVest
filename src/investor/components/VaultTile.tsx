@@ -1,9 +1,9 @@
 import React from "react";
-import { ContractAddress } from "shared/utils/config";
+import { ContractAddress } from "shared/utils/commons";
 import VaultModal from "./VaultModal";
 import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
-import { ethers } from 'ethers';
+import { formatNumber } from "shared/utils/commons";
 
 interface IVaultItemProps {
   name: string;
@@ -16,26 +16,10 @@ interface IVaultItemProps {
   Capacity: number;
   tokenPrice: number;
   tokenDenom: string;
-  assets: any;
+  asset: any;
 }
 
-const contractABI = [
-  {
-      "constant": true,
-      "inputs": [] as any,
-      "name": "getData",
-      "outputs": [{"name": "", "type": "string"}],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-  }
-];
-
-const contractAddress = "0x";
-
 const VaultTile = (props: IVaultItemProps) => {
-
-  const [data, setData] = useState(null);
 
   const {
     polygon,
@@ -54,43 +38,11 @@ function withdrawInvestment() {
     console.log("check")
 }
 
-
-
-  useEffect(() => {
-
-    async function fetchData() {
-       // Check if MetaMask is installed
-       if (typeof window.ethereum === 'undefined') {
-        console.error('MetaMask is not installed');
-        return;
-    }
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
-    
-    // Call the `getData` function from the contract
-    try {
-        const result = await contractInstance.getData();
-        setData(result);
-    } catch (error) {
-        console.error('Error calling contract method:', error);
-    }
-  }
-  
-  if (polygon && walletAddress) {
-    fetchData();
-  }
-
-  }, [polygon, walletAddress]);
-
   const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   const handleClick = () => {
     setIsVaultModalOpen(true)
   };
-
-  const vaultData = {name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC", location: "Colorado, USA", rickFactor: 0.30}
 
   return (
     <>
@@ -100,7 +52,7 @@ function withdrawInvestment() {
       setIsVaultModalOpen(false);
       document.body.classList.remove("overflow-hidden");
     }}
-    asset = {vaultData}
+    asset = {props.asset}
     invest= {invest}
     withdrawInvestment= {withdrawInvestment}
   />
@@ -128,13 +80,13 @@ function withdrawInvestment() {
         <div className="text-neutral-400 flex-1">{props.description}</div>
 
         {/* TVL */}
-        <div className="text-neutral-400 flex-1">{`TVL: ${props.TVL}`}</div>
+        <div className="text-neutral-400 flex-1">{`TVL: ${formatNumber(props.TVL)} ${props.tokenDenom}`}</div>
 
         {/* APR */}
-        <div className="text-neutral-400 flex-1">{`APR: ${props.APR}`}</div>
+        <div className="text-neutral-400 flex-1">{`APR: ${(props.APR*100).toFixed(2)} %`}</div>
 
         {/* Capacity */}
-        <div className="text-neutral-400 flex-1">{`Capacity: ${props.Capacity}`}</div>
+        <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(props.Capacity)} ${props.tokenDenom}`}</div>
 
         {/* Token Price */}
         <div className="text-neutral-400 flex-1">{`Token Price: ${props.tokenPrice} ${props.tokenDenom}`}</div>

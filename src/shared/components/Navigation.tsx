@@ -33,7 +33,7 @@ export function Navigation({
 
   return (
     <>
-      <NavLink to="/" className="block ml-4 mb-12" style={{ maxWidth: "9rem" }}>
+      <NavLink to="/farmer" className="block ml-4 mb-12" style={{ maxWidth: "9rem" }}>
       <img id="myImage" alt="Image will be displayed here" width="200" src="logo/CROPVEST_Logo.png"></img>
       </NavLink>
 
