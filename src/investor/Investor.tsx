@@ -83,9 +83,88 @@ function Investor() {
   }, [polygon, walletAddress]);
 
   useEffect(() => {
-    const vaultData = {name: "Crop Field", description: "A Crop Field somewhere in Colorado, USA", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC", location: "Colorado, USA", rickFactor: 0.30}
+   /*  const NFT = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
+    const NFTs = [NFT, NFT, NFT, NFT, NFT, NFT, NFT];
+    const vaultData = {
+      name: "Potato x Corn",
+      description: "Potato, Corn combined strat",
+      image: "",
+      tags: "",
+      url: "https://test",
+      TVL: 453656356,
+      APR: 0.1,
+      tokenPrice: "0.01",
+      tokenDenom: "USDC",
+      investment: 324355,
+      NFTs: NFTs
+    };
+    
+    const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
+    
+    const calculateVaultCapacity = (vault) => {
+        return vault.NFTs.reduce((sum, nft) => sum + nft.minimumValue, 0);
+    }
+    
+    const vaultsWithCapacity = vaultsData.map(vault => {
+        const capacity = calculateVaultCapacity(vault);
+        return { ...vault, capacity };
+    });
+    
+    setVaultData(vaultsWithCapacity);
+ */
 
-    setVaultData([vaultData,vaultData, vaultData, vaultData, vaultData, vaultData])
+    const NFT = {name: "Potato 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
+    const NFT2 = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Corn"};
+    const NFT3 = {name: "Wheat 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Wheat"};
+    const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
+    
+    const aggregateNFTs = (nfts) => {
+        // Group NFTs by their type
+        const grouped = nfts.reduce((acc, nft) => {
+            (acc[nft.type] = acc[nft.type] || []).push(nft);
+            return acc;
+        }, {});
+    
+        // Aggregate properties of NFTs with the same type
+        return Object.values(grouped).map(nftGroup => {
+            return {
+                type: nftGroup[0].type,
+                name: nftGroup.every(nft => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
+                description: "",
+                riskFactor: nftGroup.reduce((sum, nft) => sum + nft.riskFactor, 0) / nftGroup.length,
+                location: nftGroup.every(nft => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
+                minimumValue: nftGroup.reduce((sum, nft) => sum + nft.minimumValue, 0)
+            };
+        });
+    }
+    
+    const vaultData = {
+      name: "Potato x Corn",
+      description: "Potato, Corn combined strat",
+      image: "",
+      tags: "",
+      url: "https://test",
+      TVL: 453656356,
+      APR: 0.1,
+      tokenPrice: "0.01",
+      tokenDenom: "USDC",
+      investment: 324355,
+      NFTs: aggregateNFTs(NFTs)
+    };
+    
+    const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
+    
+    const calculateVaultCapacity = (vault) => {
+        return vault.NFTs.reduce((sum, nft) => sum + nft.minimumValue, 0);
+    }
+    
+    const vaultsWithCapacity = vaultsData.map(vault => {
+        const capacity = calculateVaultCapacity(vault);
+        return { ...vault, capacity };
+    });
+    
+    setVaultData(vaultsWithCapacity);
+    
   }, []);
 
   return (
@@ -109,10 +188,10 @@ function Investor() {
             placeholder="Search"
           />
         </div> */}
-        <div className="grid grid-cols-8 gap-3 auto-rows-auto">
+        <div className="grid grid-cols-8 gap-2 auto-rows-auto">
           {vaultData?.length > 0 && (
             <>
-              {vaultData.map((Vault: any) => (console.log(Vault),
+              {vaultData.map((Vault: any) => (
                 <VaultTile
                   key={Vault.name}
                   name={Vault.name}
@@ -121,7 +200,7 @@ function Investor() {
                   url={Vault.url}
                   TVL={Vault.TVL}
                   APR={Vault.APR}
-                  Capacity={Vault.Capacity}
+                  Capacity={Vault.capacity}
                   tokenPrice={Vault.tokenPrice}
                   tokenDenom={Vault.tokenDenom}
                   asset={Vault}

@@ -52,7 +52,8 @@ class VaultModal extends React.Component<IVaultProps> {
           title="Vault"
           description="Invest into the vault by depositing USDC."
         />
-                <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
+        <div className="flex center  justify-center">
+        <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left mr-4">
         {/* Image */}
         {this.props?.image && (
           <img
@@ -64,7 +65,7 @@ class VaultModal extends React.Component<IVaultProps> {
 
         {/* Name */}
         <div className="text-xl font-semibold flex-initial mb-1">
-          {this.props?.asset.name}
+          Vault Data
         </div>
 
         {/* Description */}
@@ -80,20 +81,53 @@ class VaultModal extends React.Component<IVaultProps> {
         <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(this.props.asset.Capacity)} ${this.props.asset.tokenDenom}`}</div>
 
         {/* Token Price */}
-        <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice} ${this.props.asset.tokenDenom}`}</div>
+        {/* <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice} ${this.props.asset.tokenDenom}`}</div> */}
 
         {/* Location */}
-        <div className="text-neutral-400 flex-1">{`Location: ${this.props.asset.location}`}</div>
+        {/* <div className="text-neutral-400 flex-1">{`Location: ${this.props.asset.location}`}</div> */}
 
         {/* Risk factor */}
         <div className="text-neutral-400 flex-1">{`Risk factor: ${this.props.asset.riskFactor}`}</div>
 
       </div>
-      <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-left sm:text-left py-4">
-      <div className="text-neutral-400 flex-1">{`Your vault share: ${this.props.asset.vaultShare}`}</div>
+      <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
+
+        <div className="text-xl font-semibold flex-initial mb-1">
+          Included Crop Field in this Vault:
+        </div>
+        {this.props.asset?.NFTs.length > 0 && (
+            <div className="overflow-y-auto" style={{ maxHeight: '300px' }}>
+              {this.props.asset?.NFTs.map((NFT: any) => (console.log(NFT),
+              <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-left">
+        {/* Name */}
+        <div className="text-xl font-semibold flex-initial mb-1">
+          {NFT.name}
+        </div>
+
+        {/* Description */}
+        <div className="text-neutral-400 flex-1">{NFT.description}</div>
+
+        {/* Minimum Value */}
+        <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(NFT.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
+
+        {/* Location */}
+        <div className="text-neutral-400 flex-1">{`Location: ${NFT.location}`}</div>
+
+        {/* Risk factor */}
+        <div className="text-neutral-400 flex-1">{`Risk factor: ${NFT.riskFactor}`}</div>
+
+        </div>
+
+      ))}
+      </div>
+    )}
+        </div>
+        </div>
+      <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-left sm:text-left py-4">
+      <div className="text-neutral-400 flex-1">{`Your vault investment: ${formatNumber(this.props.asset.investment)} ${this.props.asset.tokenDenom} (${(this.props.asset.investment/this.props.asset.TVL*100).toFixed(10)} % of total shares)`}</div>
       </div>
 
-      <div className="bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-right">
+      <div className="mb-4 bg-white group-hover:bg-white/95 dark:bg-neutral-800 group-hover:dark:bg-neutral-800/95 border border-neutral-200 dark:border-neutral-700 p-4 flex flex-col h-full rounded-xl overflow-hidden text-center sm:text-right">
     {/* Vault share */}
     <div className="flex items-center justify-between"> 
         <div className="flex items-center space-x-4"> {/* Nested flex for input and tokenDenom */}
@@ -101,7 +135,7 @@ class VaultModal extends React.Component<IVaultProps> {
                 value={this.props.amount}
                 type="number"
                 min="0"
-                step="0.000001"
+                step="0.001"
                 className="text focus:z-10 block min-w-0 bg-neutral-100 dark:bg-neutral-900 text-black dark:text-white px-4 rounded-lg disabled:placeholder-neutral-300 dark:disabled:placeholder-neutral-700 transition-colors font-medium focus:outline-0 focus:ring-2 ring-sky-500/40 py-2"
                 name="toValue"
                 id="toValue"
