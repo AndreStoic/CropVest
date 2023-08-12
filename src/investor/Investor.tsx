@@ -11,8 +11,9 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import VaultTile from "./components/VaultTile"
 import Header from "./components/Header";
-import { ContractAddress } from "shared/utils/commons";
 import { ethers } from 'ethers';
+import abi from 'shared/ContractABIs/CropVault.json';
+import BigNumber from "bignumber.js";
 
 function Investor() {
   const {
@@ -28,7 +29,12 @@ function Investor() {
   const [searchText, setSearchText] = useState<string>("");
 
   const [vaultData, setVaultData] = useState<any>("");
-  const [filteredVaultData, setFilteredVaultData] = useState<any>("");
+  const [vaultsUserBalances, setVaultsUserBalances] = useState<any>("");
+  const [vaultsAssets, setVaultsAssets] = useState<any>("");
+  const [vaultsNames, setVaultsNames] = useState<any>("");
+
+  const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
+  
 
   interface IVaultItemProps {
     name: string;
@@ -42,114 +48,117 @@ function Investor() {
     tokenPrice: number;
   }
 
-  const contractABI = [
-    {
-        "constant": true,
-        "inputs": [] as any,
-        "name": "getData",
-        "outputs": [{"name": "", "type": "string"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    }
-  ];
-  
-  useEffect(() => {
-
-    async function fetchData() {
-       // Check if MetaMask is installed
-       if (typeof window.ethereum === 'undefined') {
-        console.error('MetaMask is not installed');
-        return;
-    }
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-    const signer = provider.getSigner();
-    const contractInstance = new ethers.Contract(ContractAddress, contractABI, signer);
-    
-    // Call the `getData` function from the contract
-    try {
-        const result = await contractInstance.getData();
-        setData(result);
-    } catch (error) {
-        console.error('Error calling contract method:', error);
-    }
+  if (typeof window.ethereum === 'undefined') {
+    console.error('MetaMask is not installed');
+    return;
   }
-  
+
+const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+const signer = provider.getSigner();
+
+async function fetchVaultAsset(contractAddress: string) {
+ const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+ try {
+     const totalAssets: BigNumber = await contractInstance.totalAssets();
+     return totalAssets.toNumber()
+ } catch (error) {
+     console.error('Error calling contract method:', error);
+ }
+}
+
+async function fetchVaultsAssets(VaultAddresses: any) {
+  const vaults = await Promise.all(VaultAddresses.map(async (address: any) => {
+    return await fetchVaultAsset(address);
+  }));
+  return vaults
+}
+
+async function fetchVaultUserBalance(contractAddress: string) {
+  const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+  try {
+      const balanceOf: BigNumber = await contractInstance.balanceOf(walletAddress);
+      return balanceOf.toNumber()
+  } catch (error) {
+      console.error('Error calling contract method:', error);
+  }
+ }
+ async function fetchVaultsUserBalances(VaultAddresses: any) {
+  const vaults = await Promise.all(VaultAddresses.map(async (address: any) => {
+    return await fetchVaultUserBalance(address);
+  }));
+  return vaults
+}
+ 
+ async function fetchVaultsNames(VaultAddresses: any) {
+   const vaults = await Promise.all(VaultAddresses.map(async (address: any) => {
+     return await fetchVaultName(address);
+   }));
+   return vaults
+ }
+
+ async function fetchVaultName(contractAddress: string) {
+  const contractInstance = new ethers.Contract(contractAddress, abi.abi, signer);
+  try {
+      const name: BigNumber = await contractInstance.name();
+      return name
+  } catch (error) {
+      console.error('Error calling contract method:', error);
+  }
+ }
+
+
+
+ useEffect(() => {
+
   if (polygon && walletAddress) {
-    fetchData();
+
+  fetchVaultsAssets(VaultAddresses).then(result => setVaultsAssets(result))
+  fetchVaultsUserBalances(VaultAddresses).then(result => setVaultsUserBalances(result))
+  fetchVaultsNames(VaultAddresses).then(result => setVaultsNames(result))
   }
 
-  }, [polygon, walletAddress]);
+}, [polygon, walletAddress]);
 
   useEffect(() => {
-   /*  const NFT = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
-    const NFTs = [NFT, NFT, NFT, NFT, NFT, NFT, NFT];
-    const vaultData = {
-      name: "Potato x Corn",
-      description: "Potato, Corn combined strat",
-      image: "",
-      tags: "",
-      url: "https://test",
-      TVL: 453656356,
-      APR: 0.1,
-      tokenPrice: "0.01",
-      tokenDenom: "USDC",
-      investment: 324355,
-      NFTs: NFTs
-    };
-    
-    const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
-    
-    const calculateVaultCapacity = (vault) => {
-        return vault.NFTs.reduce((sum, nft) => sum + nft.minimumValue, 0);
-    }
-    
-    const vaultsWithCapacity = vaultsData.map(vault => {
-        const capacity = calculateVaultCapacity(vault);
-        return { ...vault, capacity };
-    });
-    
-    setVaultData(vaultsWithCapacity);
- */
 
+    if (vaultsNames && vaultsAssets && vaultsUserBalances) {
     const NFT = {name: "Potato 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
     const NFT2 = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Corn"};
     const NFT3 = {name: "Wheat 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Wheat"};
     const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
     
-    const aggregateNFTs = (nfts) => {
-      const grouped = nfts.reduce((acc, nft) => {
+    const aggregateNFTs = (nfts: any) => {
+      const grouped = nfts.reduce((acc: any, nft: any) => {
           (acc[nft.type] = acc[nft.type] || []).push(nft);
           return acc;
       }, {});
   
-      return Object.values(grouped).map(nftGroup => {
+      return Object.values(grouped).map((nftGroup: any) => {
           return {
               type: nftGroup[0].type,
               totalCount: nftGroup.length,  // Total count of NFTs of this type
-              name: nftGroup.every(nft => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
+              name: nftGroup.every((nft: any) => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
               description: "",
-              riskFactor: nftGroup.reduce((sum, nft) => sum + nft.riskFactor, 0) / nftGroup.length,
-              location: nftGroup.every(nft => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
-              minimumValue: nftGroup.reduce((sum, nft) => sum + nft.minimumValue, 0)
+              riskFactor: nftGroup.reduce((sum: any, nft: any) => sum + nft.riskFactor, 0) / nftGroup.length,
+              location: nftGroup.every((nft: any) => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
+              minimumValue: nftGroup.reduce((sum: any, nft:any) => sum + nft.minimumValue, 0)
           };
       });
   }
   
-  const vaultData = {
-    name: "Potato x Corn",
-    description: "Potato, Corn combined strat",
-    image: "",
-    tags: "",
+
+  const vaultsData = VaultAddresses.map((vault, i) => ({
+    name: vaultsNames[i],
     url: "https://test",
-    TVL: 453656356,
+    TVL: vaultsAssets[i],
     APR: 0.1,
     tokenPrice: "0.01",
     tokenDenom: "USDC",
-    investment: 324355,
+    investment: vaultsUserBalances[i],
     NFTs: aggregateNFTs(NFTs)
-  };
+  }));
+
+  console.log(vaultsData)
   
   const calculateVaultMinimumValue = (vault: any) => {
       return vault.NFTs.reduce((sum: any, nft: any) => {
@@ -157,15 +166,15 @@ function Investor() {
       }, 0);
   }
   
-  const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
-  
-  const vaultsWithMinimumValue = vaultsData.map(vault => {
+  const vaultsWithMinimumValue = vaultsData.map((vault: any) => {
       const minimumValue = calculateVaultMinimumValue(vault);
       return { ...vault, minimumValue };
   });
   
   setVaultData(vaultsWithMinimumValue);
-  }, []);
+}
+
+  }, [vaultsNames, vaultsAssets, vaultsUserBalances]);
 
   return (
     <>
@@ -204,6 +213,7 @@ function Investor() {
                   tokenPrice={Vault.tokenPrice}
                   tokenDenom={Vault.tokenDenom}
                   asset={Vault}
+                  contractAddress={Vault.contractAddress}
                 />
               ))}
             </>

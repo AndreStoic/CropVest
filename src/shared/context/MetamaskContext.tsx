@@ -57,7 +57,7 @@ const MetamaskContextProvider = ({ children }: any) => {
 
     window.ethereum
     .request({ method: 'eth_requestAccounts' })
-    .then((walletAddress: any) => {console.log(walletAddress)
+    .then((walletAddress: any) => {
     setWalletAddress((walletAddress[0] as string))})
     .catch((error: any) => {
       if (error.code === 4001) {

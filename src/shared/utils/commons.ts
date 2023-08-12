@@ -1,4 +1,4 @@
-export const ContractAddress = ""; 
+export const ContractAddressOracle = "0xa36755270D7A53290140257739aBED5f1D3eB2F1"; 
 
 const COUNT_ABBRS = [
     "",

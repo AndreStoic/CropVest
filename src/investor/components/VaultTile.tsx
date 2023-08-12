@@ -1,9 +1,11 @@
 import React from "react";
-import { ContractAddress } from "shared/utils/commons";
 import VaultModal from "./VaultModal";
 import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
 import { formatNumber } from "shared/utils/commons";
+import { ethers } from 'ethers';
+import abi from 'shared/ContractABIs/CropVault.json';
+import BigNumber from "bignumber.js";
 
 interface IVaultItemProps {
   name: string;
@@ -17,6 +19,7 @@ interface IVaultItemProps {
   tokenPrice: number;
   tokenDenom: string;
   asset: any;
+  contractAddress: string;
 }
 
 const VaultTile = (props: IVaultItemProps) => {
@@ -28,9 +31,16 @@ const VaultTile = (props: IVaultItemProps) => {
     connectWallet
   } = useContext(MetamaskContext);
 
-  function invest() {
-    // Check if MetaMask is installed
-    console.log("check")
+  async function invest() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+    const signer = provider.getSigner();
+    const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
+      try {
+          const totalAssets: BigNumber = await contractInstance.totalAssets();
+          return totalAssets.toNumber()
+      } catch (error) {
+          console.error('Error calling contract method:', error);
+      }
  }
 
 function withdrawInvestment() {
