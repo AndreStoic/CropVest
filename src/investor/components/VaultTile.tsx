@@ -2,6 +2,8 @@ import React from "react";
 import { ContractAddress } from "shared/utils/config";
 import VaultModal from "./VaultModal";
 import { useEffect, useState, useContext } from "react";
+import { MetamaskContext } from "shared/context/MetamaskContext";
+import { ethers } from 'ethers';
 
 interface IVaultItemProps {
   name: string;
@@ -17,16 +19,66 @@ interface IVaultItemProps {
   assets: any;
 }
 
+const contractABI = [
+  {
+      "constant": true,
+      "inputs": [] as any,
+      "name": "getData",
+      "outputs": [{"name": "", "type": "string"}],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  }
+];
+
+const contractAddress = "0x";
+
 const VaultTile = (props: IVaultItemProps) => {
+
+  const [data, setData] = useState(null);
+
+  const {
+    polygon,
+    walletAddress,
+    disconnectWallet,
+    connectWallet
+  } = useContext(MetamaskContext);
+
+  useEffect(() => {
+
+    async function fetchData() {
+       // Check if MetaMask is installed
+       if (typeof window.ethereum === 'undefined') {
+        console.error('MetaMask is not installed');
+        return;
+    }
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
+    
+    // Call the `getData` function from the contract
+    try {
+        const result = await contractInstance.getData();
+        setData(result);
+    } catch (error) {
+        console.error('Error calling contract method:', error);
+    }
+  }
+  
+  if (polygon && walletAddress) {
+    fetchData();
+  }
+
+  }, [polygon, walletAddress]);
 
   const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   const handleClick = () => {
     setIsVaultModalOpen(true)
-
   };
 
-  const data = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
+  const vaultData = [{name: "Test", description: "Test", image: "", tags:"", url:"https://test", TVL: 100000, APR: 0.001, Capacity:10, tokenPrice: "0.01", tokenDenom:"USDC"}]
 
   return (
     <>
@@ -36,7 +88,7 @@ const VaultTile = (props: IVaultItemProps) => {
       setIsVaultModalOpen(false);
       document.body.classList.remove("overflow-hidden");
     }}
-    asset = {data}
+    asset = {vaultData}
   />
     <a
       onClick={handleClick}

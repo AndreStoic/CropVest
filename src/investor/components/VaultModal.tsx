@@ -16,6 +16,7 @@ interface IVaultProps {
 }
 
 class VaultModal extends React.Component<IVaultProps> {
+
   render() {
     if (!this.props.open) return null;
 
