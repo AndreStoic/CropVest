@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState, useContext } from "react";
 import { MetamaskContext } from "shared/context/MetamaskContext";
+import Chat from './Chat';
 
 function Farmer() {
   const {
@@ -24,6 +25,7 @@ function Farmer() {
           <h1 className="font-bold text-4xl inline text-transparent bg-clip-text bg-black">
             Farmer
           </h1>
+          <Chat></Chat>
         </div>
         </div>
         
