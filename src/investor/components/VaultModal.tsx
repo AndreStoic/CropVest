@@ -79,8 +79,8 @@ class VaultModal extends React.Component<IVaultProps> {
         {/* APR */}
         <div className="text-neutral-400 flex-1">{`APR: ${(this.props.asset.APR*100).toFixed(2)} %`}</div>
 
-        {/* minimumValue */}
-        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(this.props.asset.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
+        {/* Value */}
+        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(this.props.asset.Value)} ${this.props.asset.tokenDenom}`}</div>
 
         {/* Token Price */}
         {/* <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice} ${this.props.asset.tokenDenom}`}</div> */}

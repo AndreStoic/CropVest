@@ -57,7 +57,7 @@ const VaultTile = (props: IVaultItemProps) => {
     }
 
     const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
-    const txResponse = await contractInstance.deposit(bigNumberAmount, walletAddress);
+    const txResponse = await contractInstance.withdrawal(bigNumberAmount, walletAddress, walletAddress);
     console.log(`Transaction hash: ${txResponse.hash}`);
     toast.success(`Transaction hash: ${txResponse.hash}`);
 
@@ -65,9 +65,22 @@ const VaultTile = (props: IVaultItemProps) => {
     toast.success(`Transaction confirmed in block: ${receipt.blockNumber}`);
 }
 
-function withdrawInvestment() {
-  // Check if MetaMask is installed
-    console.log("check")
+async function withdrawInvestment() {
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+  const signer = provider.getSigner();
+  const tokenInstance = new ethers.Contract(ContractAddressERC20, abi.abi, signer);
+
+  const bigNumberAmount = ethers.utils.parseUnits(amount.toString(), ERC20TokenDecimals);
+
+  const contractInstance = new ethers.Contract(props.contractAddress, abi.abi, signer);
+  const txResponse = await contractInstance.deposit(bigNumberAmount, walletAddress);
+  console.log(`Transaction hash: ${txResponse.hash}`);
+  toast.success(`Transaction hash: ${txResponse.hash}`);
+
+  const receipt = await txResponse.wait();
+  toast.success(`Transaction confirmed in block: ${receipt.blockNumber}`);
+
 }
 
   const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);

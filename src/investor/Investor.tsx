@@ -14,8 +14,9 @@ import Header from "./components/Header";
 import { ethers } from 'ethers';
 import abiCropVault from 'shared/ContractABIs/CropVault.json';
 import abiNFT from 'shared/ContractABIs/ERC1155m.json';
+import abiOracle from 'shared/ContractABIs/CropOracle.json';
 import BigNumber from "bignumber.js";
-import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection, NFTDecimals } from "shared/utils/commons";
+import { ERC20TokenDecimals, ContractAddressERC20, ContractAddressCropVault, ContractAddressCropCollection, NFTDecimals, ContractAddressOracle } from "shared/utils/commons";
 
 function Investor() {
   const {
@@ -35,6 +36,7 @@ function Investor() {
   const [vaultsAssets, setVaultsAssets] = useState<any>("");
   const [vaultsNames, setVaultsNames] = useState<any>("");
   const [vaultsNFTs, setVaultsNFTs] = useState<any>("");
+  const [cropPrices, setCropPrices] = useState<any>("");
 
   const VaultAddresses = ["0xa36755270D7A53290140257739aBED5f1D3eB2F1", "0xa36755270D7A53290140257739aBED5f1D3eB2F1","0xa36755270D7A53290140257739aBED5f1D3eB2F1"]
   
@@ -122,8 +124,24 @@ async function fetchVaultNFTs(contractAddress: string) {
  const contractInstance = new ethers.Contract(ContractAddressCropCollection, abiNFT.abi, signer);
  try {
      const balanceOfBatch = await contractInstance.balanceOfBatch([contractAddress, contractAddress, contractAddress, contractAddress],[0,1,2,3]);
-     console.log(balanceOfBatch)
-     return balanceOfBatch[0]
+     return balanceOfBatch
+ } catch (error) {
+     console.error('Error calling contract method:', error);
+ }
+}
+
+async function fetchOraclePrices(CropIds: any) {
+  const vaults = await Promise.all(CropIds.map(async (CropId: any) => {
+    return await fetchOraclePrice(CropId);
+  }));
+  return vaults
+}
+
+async function fetchOraclePrice(CropId: string) {
+ const contractInstance = new ethers.Contract(ContractAddressOracle, abiOracle.abi, signer);
+ try {
+     const cropPrice = await contractInstance.price(CropId);
+     return cropPrice
  } catch (error) {
      console.error('Error calling contract method:', error);
  }
@@ -135,6 +153,7 @@ async function fetchVaultNFTs(contractAddress: string) {
   fetchVaultsUserBalances(VaultAddresses).then(result => setVaultsUserBalances(result))
   fetchVaultsNames(VaultAddresses).then(result => setVaultsNames(result))
   fetchVaultsNFTs(VaultAddresses).then(result => setVaultsNFTs(result))
+  fetchOraclePrices([0,1,2,3]).then(result => setCropPrices(result))
   }
 
 }, [polygon, walletAddress]);
@@ -142,23 +161,15 @@ async function fetchVaultNFTs(contractAddress: string) {
 
   useEffect(() => {
 
-    if (vaultsNames && vaultsAssets && vaultsUserBalances && vaultsNFTs) {
+    if (vaultsNames && vaultsAssets && vaultsUserBalances && vaultsNFTs && cropPrices) {
     
-    const NFT = {name: "Potato 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Potato"};
-    const NFT2 = {name: "Corn 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Corn"};
-    const NFT3 = {name: "Wheat 1", description: "", riskFactor: 0.30, location: "Colorado, USA", minimumValue: 3000, type: "Wheat"};
-    const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
-    const vaultsNFTsModified = vaultsNFTs.map((item, i) => {
-      console.log(pairs[i], vaultsNFTs[i]);
-      console.log(pairs[i], vaultsNFTs[0]);
-      console.log(pairs[i], vaultsNFTs[1]);
-      console.log(pairs[i], vaultsNFTs[2]);
-      return {[pairs[i]]: vaultsNFTs[i]};
-  });
-  
-  console.log(vaultsNFTsModified);
-  
-  
+    const vaultsNFTsModified = vaultsNFTs.map((vaultsNFT: any) => {
+      return {
+        ...vaultsNFT.map((vaultsNFT, index) => {
+          return { [pairs[index]]: vaultsNFT };
+        })
+      };
+    });
 
   const vaultsData = VaultAddresses.map((vault, i) => ({
     name: vaultsNames[i],
@@ -168,25 +179,13 @@ async function fetchVaultNFTs(contractAddress: string) {
     tokenPrice: "0.01",
     tokenDenom: "USDC",
     investment: ethers.utils.formatUnits(vaultsUserBalances[i], ERC20TokenDecimals),
-    NFTs: NFTs,
+    NFTs: vaultsNFTsModified[i],
     contractAddress: VaultAddresses[i]
   }));
   
-  const calculateVaultMinimumValue = (vault: any) => {
-      return vault.NFTs.reduce((sum: any, nft: any) => {
-          return sum + (nft.minimumValue);  // Using totalCount here
-      }, 0);
-  }
-  
-  const vaultsWithMinimumValue = vaultsData.map((vault: any) => {
-      const minimumValue = calculateVaultMinimumValue(vault);
-      return { ...vault, minimumValue };
-  });
-  
-  setVaultData(vaultsWithMinimumValue);
 }
 
-  }, [vaultsNames, vaultsAssets, vaultsUserBalances, vaultsNFTs]);
+  }, [vaultsNames, vaultsAssets, vaultsUserBalances, vaultsNFTs, cropPrices]);
 
   return (
     <>
