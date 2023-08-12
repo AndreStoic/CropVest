@@ -38,7 +38,7 @@ function Investor() {
     url?: string;
     TVL: number;
     APR: number; 
-    Capacity: number;
+    minimumValue: number;
     tokenPrice: number;
   }
 
@@ -119,52 +119,52 @@ function Investor() {
     const NFTs = [NFT, NFT, NFT, NFT2, NFT, NFT2, NFT2,NFT2, NFT2,NFT2, NFT2, NFT3, NFT3, NFT3];
     
     const aggregateNFTs = (nfts) => {
-        // Group NFTs by their type
-        const grouped = nfts.reduce((acc, nft) => {
-            (acc[nft.type] = acc[nft.type] || []).push(nft);
-            return acc;
-        }, {});
-    
-        // Aggregate properties of NFTs with the same type
-        return Object.values(grouped).map(nftGroup => {
-            return {
-                type: nftGroup[0].type,
-                name: nftGroup.every(nft => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
-                description: "",
-                riskFactor: nftGroup.reduce((sum, nft) => sum + nft.riskFactor, 0) / nftGroup.length,
-                location: nftGroup.every(nft => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
-                minimumValue: nftGroup.reduce((sum, nft) => sum + nft.minimumValue, 0)
-            };
-        });
-    }
-    
-    const vaultData = {
-      name: "Potato x Corn",
-      description: "Potato, Corn combined strat",
-      image: "",
-      tags: "",
-      url: "https://test",
-      TVL: 453656356,
-      APR: 0.1,
-      tokenPrice: "0.01",
-      tokenDenom: "USDC",
-      investment: 324355,
-      NFTs: aggregateNFTs(NFTs)
-    };
-    
-    const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
-    
-    const calculateVaultCapacity = (vault) => {
-        return vault.NFTs.reduce((sum, nft) => sum + nft.minimumValue, 0);
-    }
-    
-    const vaultsWithCapacity = vaultsData.map(vault => {
-        const capacity = calculateVaultCapacity(vault);
-        return { ...vault, capacity };
-    });
-    
-    setVaultData(vaultsWithCapacity);
-    
+      const grouped = nfts.reduce((acc, nft) => {
+          (acc[nft.type] = acc[nft.type] || []).push(nft);
+          return acc;
+      }, {});
+  
+      return Object.values(grouped).map(nftGroup => {
+          return {
+              type: nftGroup[0].type,
+              totalCount: nftGroup.length,  // Total count of NFTs of this type
+              name: nftGroup.every(nft => nft.name === nftGroup[0].name) ? nftGroup[0].name : "Mixed",
+              description: "",
+              riskFactor: nftGroup.reduce((sum, nft) => sum + nft.riskFactor, 0) / nftGroup.length,
+              location: nftGroup.every(nft => nft.location === nftGroup[0].location) ? nftGroup[0].location : "Mixed",
+              minimumValue: nftGroup.reduce((sum, nft) => sum + nft.minimumValue, 0)
+          };
+      });
+  }
+  
+  const vaultData = {
+    name: "Potato x Corn",
+    description: "Potato, Corn combined strat",
+    image: "",
+    tags: "",
+    url: "https://test",
+    TVL: 453656356,
+    APR: 0.1,
+    tokenPrice: "0.01",
+    tokenDenom: "USDC",
+    investment: 324355,
+    NFTs: aggregateNFTs(NFTs)
+  };
+  
+  const calculateVaultMinimumValue = (vault: any) => {
+      return vault.NFTs.reduce((sum: any, nft: any) => {
+          return sum + (nft.minimumValue);  // Using totalCount here
+      }, 0);
+  }
+  
+  const vaultsData = [vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData, vaultData];
+  
+  const vaultsWithMinimumValue = vaultsData.map(vault => {
+      const minimumValue = calculateVaultMinimumValue(vault);
+      return { ...vault, minimumValue };
+  });
+  
+  setVaultData(vaultsWithMinimumValue);
   }, []);
 
   return (
@@ -200,7 +200,7 @@ function Investor() {
                   url={Vault.url}
                   TVL={Vault.TVL}
                   APR={Vault.APR}
-                  Capacity={Vault.capacity}
+                  minimumValue={Vault.minimumValue}
                   tokenPrice={Vault.tokenPrice}
                   tokenDenom={Vault.tokenDenom}
                   asset={Vault}

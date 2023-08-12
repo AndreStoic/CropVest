@@ -25,7 +25,7 @@ const MetamaskContextProvider = ({ children }: any) => {
       try {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x44d' }],
+          params: [{ chainId: '0x13881' }],
         })
       } catch (error) {
         try {
@@ -33,15 +33,15 @@ const MetamaskContextProvider = ({ children }: any) => {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainId: '0x44d', 
-                blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
-                chainName: 'Polygon zkEVM', 
+                chainId: '0x13881', 
+                blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+                chainName: 'Mumbai Testnet', 
                 nativeCurrency: {
                   decimals: 18,
-                  name: 'Ethereum',
-                  symbol: 'ETH'
+                  name: 'MATIC',
+                  symbol: 'MATIC'
                 },
-                rpcUrls: ['https://zkevm-rpc.com']
+                rpcUrls: ['https://rpc-mumbai.maticvigil.com/']
               },
             ],
           })

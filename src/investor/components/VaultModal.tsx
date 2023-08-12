@@ -77,8 +77,8 @@ class VaultModal extends React.Component<IVaultProps> {
         {/* APR */}
         <div className="text-neutral-400 flex-1">{`APR: ${(this.props.asset.APR*100).toFixed(2)} %`}</div>
 
-        {/* Capacity */}
-        <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(this.props.asset.Capacity)} ${this.props.asset.tokenDenom}`}</div>
+        {/* minimumValue */}
+        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(this.props.asset.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
 
         {/* Token Price */}
         {/* <div className="text-neutral-400 flex-1">{`Token Price: ${this.props.asset.tokenPrice} ${this.props.asset.tokenDenom}`}</div> */}
@@ -108,7 +108,7 @@ class VaultModal extends React.Component<IVaultProps> {
         <div className="text-neutral-400 flex-1">{NFT.description}</div>
 
         {/* Minimum Value */}
-        <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(NFT.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
+        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(NFT.minimumValue)} ${this.props.asset.tokenDenom}`}</div>
 
         {/* Location */}
         <div className="text-neutral-400 flex-1">{`Location: ${NFT.location}`}</div>

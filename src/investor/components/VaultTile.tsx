@@ -13,7 +13,7 @@ interface IVaultItemProps {
   url?: string;
   TVL: number;
   APR: number; 
-  Capacity: number;
+  minimumValue: number;
   tokenPrice: number;
   tokenDenom: string;
   asset: any;
@@ -85,8 +85,8 @@ function withdrawInvestment() {
         {/* APR */}
         <div className="text-neutral-400 flex-1">{`APR: ${(props.APR*100).toFixed(2)} %`}</div>
 
-        {/* Capacity */}
-        <div className="text-neutral-400 flex-1">{`Capacity: ${formatNumber(props.Capacity)} ${props.tokenDenom}`}</div>
+        {/* minimumValue */}
+        <div className="text-neutral-400 flex-1">{`Minimum Value: ${formatNumber(props.minimumValue)} ${props.tokenDenom}`}</div>
 
         {/* Token Price */}
         <div className="text-neutral-400 flex-1">{`Token Price: ${props.tokenPrice} ${props.tokenDenom}`}</div>
