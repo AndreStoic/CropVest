@@ -6,7 +6,8 @@ import {Ownable}  from "@openzeppelin/contracts/access/Ownable.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 import {IMoleculeController} from "@molecule/v2/interfaces/IMoleculeController.sol";
 import {ERC1155Supply} from "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
-
+import {ERC2771Context} from "@openzeppelin/contracts/metatx/ERC2771Context.sol";
+import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 
 // custom errors
 error AccountNotAllowedToMint(address minter);
@@ -16,7 +17,7 @@ error RecipientNotAllowedToReceive(address receipient);
 error OwnerNotAllowedToApprove(address owner);
 
 // Molecule ERC1155 token
-contract ERC1155m is ERC1155Supply, Ownable {
+contract ERC1155m is ERC1155Supply, ERC2771Context, Ownable {
     enum MoleculeType {
         Approve,
         Burn,
@@ -36,7 +37,10 @@ contract ERC1155m is ERC1155Supply, Ownable {
     event MoleculeUpdated(address molecule, MoleculeType mtype);
     event BaseUriUpdated(string baseURI);
 
-    constructor(string memory baseURI) ERC1155("") {
+    constructor(string memory baseURI, address trustedForwarder) 
+        ERC1155("") 
+        ERC2771Context(trustedForwarder) 
+    {
         setBaseURI(baseURI);
     }
 
@@ -134,5 +138,25 @@ contract ERC1155m is ERC1155Supply, Ownable {
     function setBaseURI(string memory baseURI) public onlyOwner {
         _baseURI = baseURI;
         emit BaseUriUpdated(baseURI);
+    }
+
+    function _msgSender() internal view virtual override(Context, ERC2771Context) returns (address sender) {
+        if (isTrustedForwarder(msg.sender)) {
+            // The assembly code is more direct than the Solidity version using `abi.decode`.
+            /// @solidity memory-safe-assembly
+            assembly {
+                sender := shr(96, calldataload(sub(calldatasize(), 20)))
+            }
+        } else {
+            return super._msgSender();
+        }
+    }
+
+    function _msgData() internal view virtual override(Context, ERC2771Context) returns (bytes calldata) {
+        if (isTrustedForwarder(msg.sender)) {
+            return msg.data[:msg.data.length - 20];
+        } else {
+            return super._msgData();
+        }
     }
 }

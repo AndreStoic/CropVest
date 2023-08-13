@@ -28,7 +28,7 @@ contract CropVaultTest is Test {
         vm.startPrank(admin);
 
         erc20 = new MockERC20("USDC", "USDC");
-        cropCollection = new ERC1155m("");
+        cropCollection = new ERC1155m("", address(this));
         cropOracle = new CropOracle(address(erc20));
         cropVault = new CropVault(
             erc20,
