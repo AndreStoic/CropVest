@@ -35,6 +35,8 @@ import { InferenceSession, Tensor } from "onnxruntime-web";
 import Model from "./Satellite";
 import AppContext from "./components/hooks/createContext";
 import * as ndarray from "ndarray";
+import { Chat as pushNotification } from "@pushprotocol/uiweb";
+
 
 const options = {
   cMapUrl: "cmaps/",

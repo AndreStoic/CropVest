@@ -27,6 +27,8 @@
     "@mui/lab": "5.0.0-alpha.115",
     "@mui/material": "^5.14.4",
     "@noble/hashes": "1.1.5",
+    "@pushprotocol/restapi": "^1.4.9",
+    "@pushprotocol/uiweb": "^1.1.10",
     "@tharsis/transactions": "0.2.5",
     "@types/react-copy-to-clipboard": "5.0.4",
     "@types/react-modal": "^3.13.1",
