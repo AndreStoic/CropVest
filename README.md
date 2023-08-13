@@ -1,6 +1,8 @@
 # CropVest
 
 ### Sustainable Satellite-based Agriculture Financing Protocol
+[Overview Video](https://www.loom.com/share/9c24673f0fca4310a0ba0ea0cb7a0191?sid=ae336414-29fa-4d6e-8f5d-b33a53750782)
+
 #### Goal: Farmers anywhere verify their crops to Wholesalers and Investors to receive the means to produce secure and stable food supply
 
 ![Backend Architecture](CropVestBackend.png)
