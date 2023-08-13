@@ -40,6 +40,8 @@ Phenological Indices: Utilizing remote sensing data and temporal vegetation indi
 #### Area v Yield
 
 Identifying crop areas is one step, but predicting yield involves accounting for factors like weather conditions and plant health.
-Yield Models: Complex predictive models integrate weather, soil, and historical yield data to estimate crop yield based on identified areas. Therefore data from different sources was combined: , including the European Soil Data Centre (ESDAC), Sentinel satellite data, and weather information. This amalgamation serves to enhance the precision and reliability of crop yield forecasts but increases comlexity.
+Yield Models: Complex predictive models integrate weather, soil, and historical yield data to estimate crop yield based on identified areas. Therefore data from different sources was combined: , including the European Soil Data Centre (ESDAC), Sentinel satellite data, and weather information. This amalgamation serves to enhance the precision and reliability of crop yield forecasts but increases complexity.
+
+![Backend Architecture](CropVestBackend.png)
 
 
