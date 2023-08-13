@@ -411,6 +411,7 @@ let DefaultIcon = L.icon({
         <div>
         <div>
             <div id="map" style={{ height: "40vh", minWidth: "450px" }}></div>
+            <Model></Model>
             <Grid container style={{ padding: "20px" }}>
             <Grid xs={1} align="center">
                 <Button
@@ -423,7 +424,6 @@ let DefaultIcon = L.icon({
                 Approve
                 </Button>
             </Grid>
-            <Model></Model>
             </Grid>
         </div>
         </div>
