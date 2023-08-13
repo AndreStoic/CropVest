@@ -13,8 +13,8 @@ import npyjs from "npyjs";
 
 // Define image, embedding and model paths
 const IMAGE_PATH = "/image.jpg";
-const IMAGE_EMBEDDING = "/embedding.npy";
-const MODEL_DIR = "/sam_onnx.onnx";
+//const IMAGE_EMBEDDING = "/embedding.npy";
+const MODEL_DIR = "/sattelite_detection.onnx";
 
 const Model = () => {
   const {
@@ -50,9 +50,9 @@ const Model = () => {
     loadImage(url);
 
     // Load the Segment Anything pre-computed embedding
-    Promise.resolve(loadNpyTensor(IMAGE_EMBEDDING, "float32")).then(
-      (embedding) => setTensor(embedding)
-    );
+    // Promise.resolve(loadNpyTensor(IMAGE_EMBEDDING, "float32")).then(
+    //   (embedding) => setTensor(embedding)
+    // );
   }, []);
 
   const loadImage = async (url: URL) => {

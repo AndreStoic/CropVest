@@ -45,6 +45,7 @@
     "leaflet-simple-map-screenshoter": "^0.5.0",
     "long": "5.2.1",
     "mixpanel-browser": "^2.46.0",
+    "ndarray": "^1.0.19",
     "npyjs": "^0.5.0",
     "onnxruntime-web": "^1.15.1",
     "query-string": "^8.1.0",

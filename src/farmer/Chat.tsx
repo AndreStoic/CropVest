@@ -30,8 +30,11 @@ import { MetamaskContext } from "shared/context/MetamaskContext";
 import ERC1155m from "shared/ContractABIs/ERC1155m.json";
 import CropVault from "shared/ContractABIs/CropVault.json";
 //import {SimpleMapScreenshoter} from "leaflet-simple-map-screenshoter";
+import * as ort from "onnxruntime-web";
+import { InferenceSession, Tensor } from "onnxruntime-web";
 import Model from "./Satellite";
 import AppContext from "./components/hooks/createContext";
+import * as ndarray from "ndarray";
 
 const options = {
   cMapUrl: "cmaps/",
@@ -313,97 +316,118 @@ export function Chat(): React.ReactElement {
 export default Chat;
 
 let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-});
-
-function Map({
-  chatController,
-  actionRequest,
-}: {
-  chatController: ChatController;
-  actionRequest: ActionRequest;
-}) {
-  const chatCtl = chatController;
-
-  const setResponse = React.useCallback((): void => {
-    const res = { type: "custom", value: "Expected corp yield is $3000" };
-    chatCtl.setActionResponse(actionRequest, res);
-  }, [actionRequest, chatCtl]);
-
-  const [input, setInput] = useState("");
-  const [disabled, setDisabled] = useState(false);
-  const [location, setLocation] = useState([48.17, 11.65]); //input.split(',').map(Number));
-  const [located, setLocated] = useState(false);
-
-  useEffect(() => {
-    var container = L.DomUtil.get("map");
-
-    if (container != null) {
-      container._leaflet_id = null;
-    }
-    var map = L.map("map").setView(location, 13);
-    L.tileLayer(
-      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-      {
-        maxZoom: 18,
-        id: "mapbox/streets-v11",
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken:
-          "pk.eyJ1IjoidGFyLWhlbCIsImEiOiJjbDJnYWRieGMwMTlrM2luenIzMzZwbGJ2In0.RQRMAJqClc4qoNwROT8Umg",
-      }
-    ).addTo(map);
-    const wmsOptions = {
-      layers: "Landsat-8",
-      transparent: true,
-      format: "image/png",
-    };
-    const wmsLayer = L.tileLayer.wms(
-      "https://kade.si/cgi-bin/mapserv?",
-      wmsOptions
-    );
-    wmsLayer.setOpacity(1); // optionnal
-    wmsLayer.addTo(map);
-    L.Marker.prototype.options.icon = DefaultIcon;
-    var marker = L.marker(location).addTo(map);
-    marker.bindPopup("<b>Field Selected").openPopup();
-    //let map_image = new SimpleMapScreenshoter().addTo(this.map)
-  }, []);
-
-  function getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(function (location) {
-      console.log(location.coords.latitude);
-      console.log(location.coords.longitude);
-      console.log(location.coords.accuracy);
-      setLocation([location.coords.latitude, location.coords.longitude]);
+    iconUrl: icon,
+    shadowUrl: iconShadow,
     });
-  }
 
-  const handleLocation = () => {
-    setLocated(true);
-  };
-  return (
-    <div>
-      <div>
-        <div id="map" style={{ height: "40vh", minWidth: "450px" }}></div>
-        <Grid container style={{ padding: "20px" }}>
-          <Grid xs={1} align="center">
-            <Button
-              type="button"
-              onClick={setResponse}
-              variant="contained"
-              color="primary"
-              disabled={disabled}
-            >
-              Approve
-            </Button>
-          </Grid>
-          <Model></Model>
-        </Grid>
-      </div>
-    </div>
-  );
+    function Map({
+    chatController,
+    actionRequest,
+    }: {
+    chatController: ChatController;
+    actionRequest: ActionRequest;
+    }) {
+    const chatCtl = chatController;
+
+    const setResponse = React.useCallback((): void => {
+        const res = { type: "custom", value: "Expected corp yield is $3000" };
+        chatCtl.setActionResponse(actionRequest, res);
+    }, [actionRequest, chatCtl]);
+
+    const [input, setInput] = useState("");
+    const [disabled, setDisabled] = useState(false);
+    const [location, setLocation] = useState([48.17, 11.65]); //input.split(',').map(Number));
+    const [located, setLocated] = useState(false);
+
+    useEffect(() => {
+        var container = L.DomUtil.get("map");
+
+        if (container != null) {
+        container._leaflet_id = null;
+        }
+        var map = L.map("map").setView(location, 13);
+        L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+            maxZoom: 18,
+            id: "mapbox/streets-v11",
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken:
+            "pk.eyJ1IjoidGFyLWhlbCIsImEiOiJjbDJnYWRieGMwMTlrM2luenIzMzZwbGJ2In0.RQRMAJqClc4qoNwROT8Umg",
+        }
+        ).addTo(map);
+        const wmsOptions = {
+        layers: "Landsat-8",
+        transparent: true,
+        format: "image/png",
+        };
+        const wmsLayer = L.tileLayer.wms(
+        "https://kade.si/cgi-bin/mapserv?",
+        wmsOptions
+        );
+        wmsLayer.setOpacity(1); // optionnal
+        wmsLayer.addTo(map);
+        L.Marker.prototype.options.icon = DefaultIcon;
+        var marker = L.marker(location).addTo(map);
+        marker.bindPopup("<b>Field Selected").openPopup();
+        //let map_image = new SimpleMapScreenshoter().addTo(this.map)
+    }, []);
+
+    function getCurrentLocation() {
+        navigator.geolocation.getCurrentPosition(function (location) {
+        console.log(location.coords.latitude);
+        console.log(location.coords.longitude);
+        console.log(location.coords.accuracy);
+        setLocation([location.coords.latitude, location.coords.longitude]);
+        });
+    }
+
+    const inference = async () => {
+        const session = new InferenceSession({
+            modelUrl: 'yield_predictor.onnx',
+            backendHint: 'cpu'
+        });
+
+        const inputName = session.inputNames[0];
+        const outputName = session.outputNames[0];
+
+        const inputArray = ndarray(new Float32Array([77, 6, 9, 9, 52, 11, 85, 5200, 8, 1, 0, 0, 0, 0]), [1, 14]);
+        const inputTensor = new Tensor(inputArray.data, 'float32', inputArray.shape);
+
+        const feeds = inputTensor;
+
+        const outputs = await session.run(feeds);
+        const outputTensor = outputs.get(outputName);
+
+        const outputData = outputTensor.data as Float32Array;
+        console.log(outputData);
+    }
+
+    const handleLocation = () => {
+        setLocated(true);
+    };
+    return (
+        <div>
+        <div>
+            <div id="map" style={{ height: "40vh", minWidth: "450px" }}></div>
+            <Grid container style={{ padding: "20px" }}>
+            <Grid xs={1} align="center">
+                <Button
+                type="button"
+                onClick={setResponse}
+                variant="contained"
+                color="primary"
+                disabled={disabled}
+                >
+                Approve
+                </Button>
+            </Grid>
+            <Model></Model>
+            </Grid>
+        </div>
+        </div>
+    );
 }
 
 function Mint({
